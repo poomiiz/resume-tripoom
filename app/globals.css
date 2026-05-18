@@ -1,0 +1,303 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Portfolio Specific Styles --- */
+@keyframes portfolio-sway {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes portfolio-skills-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.portfolio-page[data-portfolio-theme="light"] {
+  --pf-bg: #f6f4ef;
+  --pf-bg-elevated: #ffffff;
+  --pf-text: #14141f;
+  --pf-muted: #5c5c6f;
+  --pf-border: rgba(20, 20, 31, 0.1);
+  --pf-accent: #c2410c;
+  --pf-accent-soft: rgba(194, 65, 12, 0.12);
+  --pf-nav: rgba(246, 244, 239, 0.88);
+  --pf-shadow: 0 18px 50px rgba(20, 20, 31, 0.08);
+  --pf-hero-grad: linear-gradient(105deg, rgba(20, 20, 31, 0.55) 0%, rgba(20, 20, 31, 0.15) 55%, transparent 100%);
+  --pf-contact-bg: linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #f5f3ff 100%);
+  color: var(--pf-text);
+  background: var(--pf-bg);
+}
+
+.portfolio-page[data-portfolio-theme="dark"] {
+  --pf-bg: #09090f;
+  --pf-bg-elevated: #12121c;
+  --pf-text: #f4f4f8;
+  --pf-muted: #9ca3b8;
+  --pf-border: rgba(255, 255, 255, 0.09);
+  --pf-accent: #f97316;
+  --pf-accent-soft: rgba(249, 115, 22, 0.15);
+  --pf-nav: rgba(9, 9, 15, 0.86);
+  --pf-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  --pf-hero-grad: linear-gradient(105deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 55%, transparent 100%);
+  --pf-contact-bg: linear-gradient(135deg, #1a1520 0%, #12121c 45%, #0f1419 100%);
+  color: var(--pf-text);
+  background: var(--pf-bg);
+}
+
+.portfolio-shell {
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.portfolio-nav {
+  background: var(--pf-nav);
+  border-bottom: 1px solid var(--pf-border);
+}
+.portfolio-nav-link { color: var(--pf-muted); }
+.portfolio-nav-link:hover { color: var(--pf-accent); }
+.portfolio-section-label { color: var(--pf-muted); }
+.portfolio-accent { color: var(--pf-accent); }
+.portfolio-panel {
+  background: var(--pf-bg-elevated);
+  border: 1px solid var(--pf-border);
+  box-shadow: var(--pf-shadow);
+}
+.portfolio-hero-gradient { background: var(--pf-hero-grad); }
+.portfolio-portrait { box-shadow: var(--pf-shadow); }
+
+.portfolio-theme-switch {
+  background: var(--pf-bg-elevated);
+  border: 1px solid var(--pf-border);
+  color: var(--pf-muted);
+}
+.portfolio-theme-switch button {
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.portfolio-theme-switch__active {
+  background: var(--pf-accent-soft);
+  color: var(--pf-accent);
+}
+.portfolio-icon-btn {
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid var(--pf-border);
+  background: var(--pf-bg-elevated);
+  color: var(--pf-text);
+}
+
+.portfolio-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pf-accent) 0%, #ea580c 100%);
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.portfolio-btn-primary:hover { transform: translateY(-1px); }
+.portfolio-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--pf-text);
+  border: 1px solid var(--pf-border);
+  background: transparent;
+  transition: background 0.2s;
+}
+.portfolio-btn-ghost:hover { background: var(--pf-accent-soft); }
+
+.portfolio-tool-chip { color: var(--pf-text); }
+.portfolio-brand-cell {
+  transition: transform 0.25s ease, border-color 0.25s;
+}
+.portfolio-brand-cell:hover {
+  transform: translateY(-3px);
+  border-color: var(--pf-accent);
+}
+.portfolio-reel {
+  transition: transform 0.3s ease, box-shadow 0.3s;
+}
+.portfolio-reel:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--pf-shadow);
+}
+.portfolio-contact {
+  background: var(--pf-contact-bg);
+  border: 1px solid var(--pf-border);
+  box-shadow: var(--pf-shadow);
+}
+
+.portfolio-skills-marquee { animation: portfolio-skills-scroll 38s linear infinite; }
+.portfolio-sway-chip { animation: portfolio-sway 5.5s ease-in-out infinite; }
+.portfolio-reveal--out { opacity: 0; transform: translateY(1.35rem); }
+.portfolio-reveal--in { opacity: 1; transform: translateY(0); }
+
+.portfolio-lane-switch {
+  background: var(--pf-bg-elevated);
+  border: 1px solid var(--pf-border);
+  color: var(--pf-muted);
+}
+.portfolio-lane-switch button {
+  transition: background 0.2s, color 0.2s;
+}
+.portfolio-lane-switch__active {
+  background: var(--pf-accent-soft);
+  color: var(--pf-accent);
+}
+
+.portfolio-skill-chip--static {
+  animation: none;
+}
+.portfolio-skill-soft-grid .portfolio-skill-chip {
+  padding: 0.45rem 0.85rem;
+}
+
+.portfolio-locale-switch {
+  background: var(--pf-bg-elevated);
+  border: 1px solid var(--pf-border);
+}
+.portfolio-locale-switch__btn { transition: opacity 0.2s, transform 0.2s; }
+.portfolio-locale-switch__active {
+  background: var(--pf-accent-soft);
+  box-shadow: 0 0 0 1px var(--pf-border);
+}
+.portfolio-flag {
+  display: block;
+  object-fit: cover;
+}
+
+/* สลับภาษาแล้วความสูงคงที่ — ghost วัดจากข้อความที่ยาวกว่า */
+.portfolio-locale-stack {
+  display: grid;
+  position: relative;
+}
+.portfolio-locale-stack > span {
+  grid-area: 1 / 1;
+}
+.portfolio-locale-stack__ghost {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+.portfolio-locale-stack__active {
+  visibility: visible;
+}
+
+.portfolio-skill-pill {
+  background: var(--pf-bg-elevated);
+}
+.portfolio-hero-copy .portfolio-locale-stack {
+  width: 100%;
+}
+.portfolio-timeline-job .portfolio-locale-stack {
+  width: 100%;
+}
+
+.portfolio-timeline-list { position: relative; }
+.portfolio-timeline-row { position: relative; }
+.portfolio-timeline-line {
+  position: absolute;
+  left: 1.35rem;
+  top: 3.5rem;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--pf-accent) 0%, var(--pf-border) 100%);
+  opacity: 0.45;
+}
+.portfolio-timeline-year { color: var(--pf-accent); }
+
+.portfolio-view-mode {
+  background: var(--pf-bg-elevated);
+  border: 1px solid var(--pf-border);
+  color: var(--pf-muted);
+}
+.portfolio-view-mode__active {
+  background: var(--pf-accent-soft);
+  color: var(--pf-accent);
+  box-shadow: 0 0 0 1px var(--pf-border);
+}
+
+.portfolio-tech-hero {
+  background: linear-gradient(135deg, var(--pf-accent-soft) 0%, var(--pf-bg-elevated) 42%, var(--pf-bg-elevated) 100%);
+}
+.portfolio-tech-skill-group--ai-agents::before,
+.portfolio-tech-skill-group--fullstack::before,
+.portfolio-tech-skill-group--creative-ai::before {
+  content: "";
+  display: block;
+  height: 2px;
+  margin: -1.25rem -1.25rem 1rem;
+  border-radius: 1rem 1rem 0 0;
+  opacity: 0.9;
+}
+.portfolio-tech-skill-group--ai-agents::before {
+  background: linear-gradient(90deg, #8b5cf6, transparent);
+}
+.portfolio-tech-skill-group--fullstack::before {
+  background: linear-gradient(90deg, var(--pf-accent), transparent);
+}
+.portfolio-tech-skill-group--creative-ai::before {
+  background: linear-gradient(90deg, #06b6d4, transparent);
+}
+.portfolio-tech-exp {
+  border-left: 3px solid var(--pf-accent);
+}
+
+.portfolio-nav-anchor { color: var(--pf-muted); }
+.portfolio-chapter-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pf-accent);
+}
+
+.portfolio-arc { list-style: none; padding: 0; margin: 0; }
+.portfolio-arc-step { position: relative; }
+.portfolio-arc-connector {
+  position: absolute;
+  top: 2.25rem;
+  right: -0.65rem;
+  width: 1.3rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pf-accent), var(--pf-border));
+  opacity: 0.55;
+}
+.portfolio-arc-step--motion { border-top: 3px solid var(--pf-accent); }
+.portfolio-arc-step--bridge { border-top: 3px solid color-mix(in srgb, var(--pf-accent) 55%, #8b5cf6); }
+.portfolio-arc-step--tech { border-top: 3px solid #8b5cf6; }
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-skills-marquee,
+  .portfolio-sway-chip { animation: none !important; }
+  .portfolio-skill-bento-item:hover,
+  .portfolio-skill-tool:hover { transform: none; }
+  .portfolio-reveal--out { opacity: 1; transform: none; }
+}
+
+/* --- Added Base Styles for Standard Consistency --- */
+:root {
+  --pf-accent: #f97316; /* Default dark accent */
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-plex-thai), system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+}
