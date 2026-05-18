@@ -1,0 +1,49 @@
+{
+  "name": {
+    "th": "ไตรภูมิ สิงหาอาจ",
+    "en": "Tripoom Singhaart"
+  },
+  "nameLatin": {
+    "th": "Tripoom Singhaart",
+    "en": "Tripoom Singhaart"
+  },
+  "mainRole": {
+    "creative": {
+      "th": "Senior Motion Artist & AI Content Director",
+      "en": "Senior Motion Artist & AI Content Director"
+    },
+    "tech": {
+      "th": "Creative Automation & AI Systems Architect",
+      "en": "Creative Automation & AI Systems Architect"
+    }
+  },
+  "tagline": {
+    "creative": {
+      "th": "ประสบการณ์กว่า 12 ปีด้าน Motion Design ระดับ Cinematic & AI Storytelling",
+      "en": "12+ Years of Cinematic Motion Design & AI Storytelling"
+    },
+    "tech": {
+      "th": "สร้างระบบอัจฉริยะและ Creative Pipeline ที่ขับเคลื่อนด้วยโค้ด",
+      "en": "Building Intelligent Systems & Code-Driven Creative Pipelines"
+    }
+  },
+  "subtitle": {
+    "creative": {
+      "th": "12 ปีที่ผ่านมา ผมทำ Motion Design ให้แบรนด์ใหญ่ทั้ง Samsung, Lexus, PTT และ SCB จนถึงจุดที่เริ่มมองเห็นว่า AI จะเปลี่ยนวิธีทำงานสร้างสรรค์ไปอย่างสิ้นเชิง เลยผันตัวมาเป็น AI Content Director ผสานสกิลการเล่าเรื่องที่สะสมมากับเทคโนโลยี Generative AI จนสามารถทำงานโปรดักชันแบบครบวงจรคนเดียวได้",
+      "en": "With 12+ years of experience as a Senior Motion Artist for global giants (Samsung, Lexus, PTT, SCB), I have evolved into an AI Content Director. I bridge the gap between professional visual storytelling and Generative AI, single-handedly directing and producing full-scale digital narratives and cinematic visuals—mastering the end-to-end creative process through technology."
+    },
+    "tech": {
+      "th": "นอกจากงาน Motion ผมยังสร้างระบบและ Automation จริงๆ มาตลอด ตั้งแต่ระบบ Full-stack สำหรับแคมเปญระดับประเทศอย่าง STAEDTLER ไปจนถึงแพลตฟอร์ม AI ของตัวเอง (MoonRacle) สิ่งที่ผมทำคือออกแบบ Workflow ที่ใช้ได้จริง ขยายตัวได้ และแก้ปัญหาที่ซับซ้อนได้โดยไม่ต้องพึ่งคนเยอะ",
+      "en": "I am a systems developer focused on building intelligent architectures and high-impact automation. From developing full-stack systems for national campaigns (STAEDTLER) to creating advanced AI platforms (MoonRacle), I specialize in designing secure, robust, and scalable workflows. My goal is to transform business complexity into efficient, code-driven automation."
+    }
+  },
+  "sourceUrl": "https://tripoomsinghaart.framer.website/",
+  "contact": {
+    "phone": "062-465-9950",
+    "phoneHref": "tel:+66624659950",
+    "email": "singhaarttripoom@gmail.com",
+    "emailHref": "mailto:singhaarttripoom@gmail.com",
+    "line": "@tripoom-om",
+    "lineHref": "https://line.me/ti/p/~tripoom-om"
+  }
+}

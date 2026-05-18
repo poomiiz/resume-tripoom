@@ -1,19 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type ReactNode, type RefObject } from "react";
-import { usePointerTilt, useRevealOnScroll } from "./usePortfolioMotion";
+import { useEffect, useRef, useState, type ReactNode, type RefObject } from "react";
+import { usePointerTilt } from "./usePortfolioMotion";
 import { usePortfolioTheme } from "./usePortfolioTheme";
 import { usePortfolioLocale } from "./usePortfolioLocale";
 import { LocaleStack } from "./LocaleStack";
 import { LocaleUiStack } from "./LocaleUiStack";
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
-import { reelLabelForLocale } from "../_lib/portfolio.build";
 import { FlagIcon } from "./FlagIcon";
 import { SkillsLaneSection } from "./SkillsLaneSection";
 import { UnifiedTimeline } from "./UnifiedTimeline";
-import { ProfileToggle, type PortfolioMode } from "./ProfileToggle";
+import { ExtraMotionReels } from "./ExtraMotionReels";
+import { ProfileToggle } from "./ProfileToggle";
+import type { PortfolioMode } from "../_lib/portfolioMode";
+import { ContactDock, PORTFOLIO_OPEN_CONTACT_EVENT } from "./ContactDock";
+import { BrandsMarquee } from "./BrandsMarquee";
 import { AnimatePresence, motion } from "framer-motion";
+
+function scrollToSection(id: string) {
+  if (id === "contact") {
+    window.dispatchEvent(new CustomEvent(PORTFOLIO_OPEN_CONTACT_EVENT));
+    return;
+  }
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 function SectionLabel({
   path,
@@ -38,7 +49,7 @@ function SectionLabel({
         path={path}
         locale={locale}
         as="p"
-        className="portfolio-section-label text-[0.68rem] font-semibold uppercase tracking-[0.22em] block text-[color:var(--pf-accent)]/80"
+        className="portfolio-section-label text-[0.75rem] font-semibold uppercase tracking-[0.16em] block text-[color:var(--pf-accent)]/80"
       />
       <span className="hidden sm:block h-px flex-1 bg-gradient-to-r from-[color:var(--pf-accent)]/40 via-black/[0.06] to-transparent dark:via-white/10" />
     </div>
@@ -64,7 +75,7 @@ function LocaleSwitch({
         <FlagIcon locale="th" className={`h-3.5 w-5 rounded-[2px] shadow-sm ring-1 ring-black/10 transition-opacity ${locale === 'th' ? 'opacity-100 z-10' : 'opacity-40 group-hover:opacity-60'}`} />
         <FlagIcon locale="en" className={`h-3.5 w-5 rounded-[2px] shadow-sm ring-1 ring-black/10 transition-opacity ${locale === 'en' ? 'opacity-100 z-10' : 'opacity-40 group-hover:opacity-60'}`} />
       </div>
-      <span className="text-[0.6rem] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 group-hover:text-black dark:group-hover:text-white transition-opacity ml-1">
+      <span className="text-[0.75rem] font-bold uppercase tracking-[0.08em] text-black/60 dark:text-white/60 group-hover:text-black dark:group-hover:text-white transition-colors ml-1">
         {locale}
       </span>
     </button>
@@ -76,8 +87,10 @@ export default function PortfolioView() {
   const { theme, toggle, ready: themeReady } = usePortfolioTheme();
   const [mode, setModeState] = useState<PortfolioMode>("creative");
   const [modeReady, setModeReady] = useState(false);
-  const heroTilt = usePointerTilt(4);
+  const portraitTilt = usePointerTilt(2);
+  const navRef = useRef<HTMLElement>(null);
   const [scrollY, setScrollY] = useState(0);
+  const [navHeight, setNavHeight] = useState(56);
 
   // Sync mode with localStorage and URL
   useEffect(() => {
@@ -107,6 +120,16 @@ export default function PortfolioView() {
   }, []);
 
   useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const measure = () => setNavHeight(el.getBoundingClientRect().height);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [modeReady, pf.ready, themeReady, mode, pf.locale]);
+
+  useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
     let raf = 0;
@@ -126,21 +149,28 @@ export default function PortfolioView() {
     return <div className="portfolio-page min-h-screen" aria-busy="true" />;
   }
 
-  const { profile, images, skillSections, unifiedJourney, brandLogos, contact, locale, setLocale } = pf;
+  const { profile, images, skillSections, unifiedJourney, brandLogos, extraMotionReels, contact, locale, setLocale } = pf;
   const parallax = scrollY * 0.06;
+  const navScrolled = scrollY > 6;
 
   // Theme configuration based on mode
   const accentColor = mode === "creative" ? "#F59E0B" : "#10B981"; 
   const modeTheme = mode === "creative" ? "creative" : "tech";
 
   return (
-    <div 
-      className="portfolio-page min-h-screen pb-20 transition-colors duration-500 bg-[#f8f8f8] dark:bg-[#0a0a0a]" 
+    <>
+    <div
+      className="portfolio-page min-h-screen pb-28 transition-colors duration-500"
       data-portfolio-theme={theme}
       data-portfolio-mode={modeTheme}
+      data-locale={locale}
       style={{ "--pf-accent": accentColor } as any}
     >
-      <nav className="portfolio-nav sticky top-0 z-50 backdrop-blur-xl border-b border-black/[0.05] dark:border-white/5 bg-white/80 dark:bg-black/80">
+      <nav
+        ref={navRef}
+        className={`portfolio-nav${navScrolled ? " portfolio-nav--scrolled" : ""}`}
+        aria-label="Portfolio"
+      >
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-4 flex-1 text-left">
             <a
@@ -179,12 +209,21 @@ export default function PortfolioView() {
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
 
-            <a href={contact.emailHref} className="portfolio-btn-primary text-xs px-3 py-2 sm:px-4 min-w-[4.5rem] text-center">
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("contact");
+              }}
+              className="portfolio-btn-primary text-xs px-3 py-2 sm:px-4 min-w-[4.5rem] text-center"
+            >
               <LocaleUiStack path="nav.contact" locale={locale} />
             </a>
           </div>
         </div>
       </nav>
+
+      <div id="top" style={{ height: navHeight }} aria-hidden className="shrink-0" />
 
       <header className="relative mx-auto max-w-6xl px-5 pt-4 md:pt-8">
         <div className="portfolio-hero relative overflow-hidden rounded-[1.75rem] md:rounded-[2rem] bg-[#0a0a0a]">
@@ -194,16 +233,7 @@ export default function PortfolioView() {
             <div className="portfolio-hero-gradient absolute inset-0" />
           </div>
 
-          <div
-            className="relative z-10 grid gap-10 p-8 md:p-16 lg:p-20 md:grid-cols-[1.4fr_0.6fr] md:items-start"
-            ref={heroTilt.ref}
-            onPointerMove={heroTilt.onMove}
-            onPointerLeave={heroTilt.onLeave}
-            style={{
-              transform: heroTilt.transform,
-              transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
-            }}
-          >
+          <div className="relative z-10 grid gap-10 p-8 md:p-16 lg:p-20 md:grid-cols-[1.4fr_0.6fr] md:items-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={mode}
@@ -213,7 +243,7 @@ export default function PortfolioView() {
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 className="max-w-2xl portfolio-hero-copy text-left"
               >
-                <p className="text-[0.85rem] font-black uppercase tracking-[0.4em] text-[color:var(--pf-accent)] mb-6 flex items-center gap-3 text-wrap text-left">
+                <p className="portfolio-label text-[color:var(--pf-accent)] mb-6 flex items-center gap-3 text-wrap text-left">
                   <span className="w-8 h-px bg-[color:var(--pf-accent)]/50 shrink-0" />
                   <span aria-hidden className="text-base leading-none drop-shadow-[0_0_10px_var(--pf-accent)]">
                     {mode === "creative" ? "🎬" : "🤖"}
@@ -225,33 +255,37 @@ export default function PortfolioView() {
                   text={profile.name}
                   locale={locale}
                   as="h1"
-                  className="font-brand text-[clamp(2.5rem,8vw,5rem)] font-bold leading-[0.9] text-white drop-shadow-2xl mb-6 text-left"
+                  className="portfolio-hero-name font-brand font-semibold leading-[1.08] text-white drop-shadow-2xl mb-5 text-left tracking-tight"
                 />
 
-                <p className="text-lg md:text-2xl text-white/90 tracking-tight font-medium text-left max-w-2xl leading-snug">
+                <p className="text-lg md:text-xl text-white/90 font-medium text-left max-w-2xl leading-snug tracking-normal">
                   {mode === "creative" ? profile.tagline.creative[locale] : profile.tagline.tech[locale]}
                 </p>
 
                 <div className="flex items-center gap-3 my-10">
                   <div className="w-24 h-1.5 bg-[color:var(--pf-accent)] rounded-full shadow-[0_0_15px_var(--pf-accent)] transition-all duration-500" />
-                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.3em] text-white/60">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
                     <span aria-hidden>{mode === "creative" ? "🎨" : "🧠"}</span>
                     <span aria-hidden className="opacity-40">·</span>
                     <span aria-hidden>{mode === "creative" ? "✨" : "⚙️"}</span>
                   </div>
                 </div>
 
-                <p className="text-base md:text-xl text-white/80 leading-relaxed max-w-2xl font-medium opacity-90 text-left">
+                <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-2xl font-normal text-left">
                   {mode === "creative" ? profile.subtitle.creative[locale] : profile.subtitle.tech[locale]}
                 </p>
               </motion.div>
             </AnimatePresence>
 
             <div
+              ref={portraitTilt.ref}
+              onPointerMove={portraitTilt.onMove}
+              onPointerLeave={portraitTilt.onLeave}
               className="portfolio-portrait relative mx-auto aspect-[3/4] w-full max-w-[320px] overflow-hidden rounded-[3rem] border-2 border-white/10 shadow-[0_40px_80px_rgba(0,0,0,0.8)] md:mx-0 md:mt-6 self-center justify-self-end group"
-              style={{ 
-                transform: `translateY(${parallax * 0.3}px)`,
-                boxShadow: `0 40px 80px -15px ${mode === 'creative' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(16, 185, 129, 0.2)'}`
+              style={{
+                transform: `${portraitTilt.transform} translateY(${parallax * 0.3}px)`,
+                transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+                boxShadow: `0 40px 80px -15px ${mode === "creative" ? "rgba(245, 158, 11, 0.2)" : "rgba(16, 185, 129, 0.2)"}`,
               }}
             >
               <Image
@@ -272,8 +306,8 @@ export default function PortfolioView() {
         <section id="journey" className="scroll-mt-24">
           <SectionLabel path="sections.story" locale={locale} icon={mode === "creative" ? "🎬" : "🏗️"} />
           <div className="flex flex-col md:flex-row md:items-baseline gap-2 mt-4 mb-10 text-left">
-            <LocaleUiStack path="sections.story" locale={locale} as="h2" className="text-2xl md:text-4xl font-bold block text-black dark:text-white" />
-            <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
+            <LocaleUiStack path="sections.story" locale={locale} as="h2" className="portfolio-section-heading block text-black dark:text-white" />
+            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
               <span aria-hidden>{mode === "creative" ? "🎨" : "🔗"}</span>
               {mode === 'creative' ? "Motion & VFX Craft" : "Systems & Architecture"}
             </span>
@@ -281,14 +315,17 @@ export default function PortfolioView() {
           
           <div className="mt-12">
             <UnifiedTimeline journey={unifiedJourney} locale={pf.locale} displayMode={mode} />
+            {mode === "creative" && extraMotionReels.length > 0 && (
+              <ExtraMotionReels reels={extraMotionReels} locale={locale} />
+            )}
           </div>
         </section>
 
         <section id="skills" className="scroll-mt-24 text-left">
           <SectionLabel path="sections.skills" locale={locale} icon={mode === "creative" ? "✨" : "⚙️"} />
           <div className="mt-4 flex flex-col md:flex-row md:items-baseline gap-2">
-            <LocaleUiStack path="sections.skills" locale={locale} as="h2" className="text-2xl md:text-4xl font-bold block text-black dark:text-white text-left" />
-            <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
+            <LocaleUiStack path="sections.skills" locale={locale} as="h2" className="portfolio-section-heading block text-black dark:text-white text-left" />
+            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
               <span aria-hidden>{mode === "creative" ? "🎞️" : "🧠"}</span>
               {mode === "creative" ? "Tools & Craft Stack" : "Engineering Stack"}
             </span>
@@ -301,80 +338,22 @@ export default function PortfolioView() {
         {/* Global Brands Section */}
         <section id="brands" className="scroll-mt-24 pt-10 text-left">
           <SectionLabel path="sections.brands" locale={locale} icon="🌐" />
-          <div className="mt-4 flex flex-col md:flex-row md:items-baseline gap-2">
-            <LocaleUiStack path="sections.brandsTitle" locale={locale} as="h2" className="text-2xl md:text-4xl font-bold block text-black dark:text-white text-left" />
-            <span className="text-xs md:text-sm font-bold uppercase tracking-widest text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
+          <div className="mt-4 flex flex-col md:flex-row md:items-baseline gap-2 mb-10">
+            <LocaleUiStack path="sections.brandsTitle" locale={locale} as="h2" className="portfolio-section-heading block text-black dark:text-white text-left" />
+            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
               <span aria-hidden>🏢</span>
               Trusted Collaborations
             </span>
           </div>
-          <div className="mt-10 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3 md:gap-4">
-            {brandLogos.map((logo, i) => (
-              <div
-                key={`${logo.src}-${i}`}
-                className="portfolio-brand-cell portfolio-panel group relative flex aspect-square items-center justify-center rounded-2xl p-4 bg-white dark:bg-white/[0.02] border border-black/[0.08] dark:border-white/5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[color:var(--pf-accent)]/30 hover:shadow-lg hover:bg-black/[0.02] dark:hover:bg-white/[0.05] shadow-sm dark:shadow-none overflow-hidden"
-              >
-                <span className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[color:var(--pf-accent)]/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                <Image src={logo.src} alt={logo.alt} width={80} height={80} className="max-h-full max-w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" />
-              </div>
-            ))}
-          </div>
+
+          {/* Dual marquee — row 1 LTR, row 2 RTL, fade mask on both sides */}
+          <BrandsMarquee logos={brandLogos} />
         </section>
 
-        <section id="contact" className="scroll-mt-24 pb-20 text-left">
-          <footer className="portfolio-contact relative overflow-hidden rounded-[2rem] p-10 md:p-16 text-center border border-black/[0.08] dark:border-white/5 bg-white dark:bg-white/[0.01] shadow-xl dark:shadow-none">
-            {/* ambient glow */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -z-0 opacity-60 dark:opacity-50"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--pf-accent) 18%, transparent) 0%, transparent 55%)",
-              }}
-            />
-
-            <div className="relative z-10">
-              <div className="flex items-center justify-center gap-2 mb-3 text-2xl md:text-3xl">
-                <span aria-hidden className="drop-shadow-[0_0_12px_var(--pf-accent)]">🎬</span>
-                <span aria-hidden className="text-base text-[color:var(--pf-accent)] opacity-50">×</span>
-                <span aria-hidden className="drop-shadow-[0_0_12px_var(--pf-accent)]">🤖</span>
-              </div>
-
-              <SectionLabel path="sections.contact" locale={locale} icon="✉️" />
-
-              <LocaleUiStack
-                path="sections.contactTitle"
-                locale={locale}
-                as="h2"
-                className="mt-4 font-brand text-3xl md:text-5xl block text-black dark:text-white"
-              />
-              <LocaleUiStack
-                path="sections.contactSub"
-                locale={locale}
-                as="p"
-                className="mt-3 text-base md:text-lg text-black/60 dark:text-white/60 block max-w-xl mx-auto leading-relaxed"
-              />
-
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a
-                  href={contact.phoneHref}
-                  className="portfolio-btn-ghost w-full sm:w-auto px-10 py-4 text-lg border-black/[0.2] text-black dark:border-white/20 dark:text-white font-bold inline-flex items-center justify-center gap-2"
-                >
-                  <span aria-hidden>📞</span>
-                  {contact.phone}
-                </a>
-                <a
-                  href={contact.emailHref}
-                  className="portfolio-btn-primary w-full sm:w-auto px-10 py-4 text-lg font-bold inline-flex items-center justify-center gap-2"
-                >
-                  <span aria-hidden>✨</span>
-                  {contact.email}
-                </a>
-              </div>
-            </div>
-          </footer>
-        </section>
       </main>
     </div>
+
+    <ContactDock locale={locale} contact={contact} />
+    </>
   );
 }

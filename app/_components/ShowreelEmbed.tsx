@@ -63,7 +63,7 @@ export function ShowreelEmbed({ href, thumb, label, locale, className = "" }: Pr
             </span>
           </div>
           <div className="relative z-10 flex flex-col justify-end p-5 md:p-7 pointer-events-none">
-            <span className="text-[0.6rem] font-bold uppercase tracking-wider text-white/55 block mb-1">Showreel</span>
+            <span className="text-[0.75rem] font-bold uppercase tracking-[0.14em] text-white/60 block mb-1">Showreel</span>
             <LocaleStack text={label} locale={locale} as="p" className="text-lg md:text-xl font-bold text-white" />
           </div>
         </button>

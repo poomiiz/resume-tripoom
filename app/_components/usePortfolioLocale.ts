@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
 import { LOCALE_EMOJI, UI } from "../_lib/portfolio.ui";
 import {
@@ -9,6 +9,7 @@ import {
   getBrandLogos,
   getPortfolioImages,
   getProfile,
+  getExtraMotionReels,
   getSkillSections,
 } from "../_lib/portfolio.build";
 import { PROFILE } from "../_lib/portfolio.data";
@@ -37,12 +38,13 @@ export function usePortfolioLocale() {
   }, []);
 
   const t = UI[locale];
-  const profile = getProfile();
-  const images = getPortfolioImages();
-  const skillSections = getSkillSections();
-  const timeline = buildTimeline();
-  const unifiedJourney = buildUnifiedTimeline();
-  const brandLogos = getBrandLogos();
+  const profile = useMemo(() => getProfile(), []);
+  const images = useMemo(() => getPortfolioImages(), []);
+  const skillSections = useMemo(() => getSkillSections(), []);
+  const timeline = useMemo(() => buildTimeline(), []);
+  const unifiedJourney = useMemo(() => buildUnifiedTimeline(), []);
+  const brandLogos = useMemo(() => getBrandLogos(), []);
+  const extraMotionReels = useMemo(() => getExtraMotionReels(), []);
 
   return {
     ready,
@@ -56,6 +58,7 @@ export function usePortfolioLocale() {
     timeline,
     unifiedJourney,
     brandLogos,
+    extraMotionReels,
     contact: PROFILE.contact,
     sourceUrl: PROFILE.sourceUrl,
   };

@@ -22,10 +22,13 @@ export function usePortfolioTheme() {
 
   useEffect(() => {
     if (!ready) return;
-    document.documentElement.setAttribute("data-portfolio-theme", theme);
+    const root = document.documentElement;
+    root.setAttribute("data-portfolio-theme", theme);
+    root.classList.toggle("dark", theme === "dark");
     localStorage.setItem(STORAGE_KEY, theme);
     return () => {
-      document.documentElement.removeAttribute("data-portfolio-theme");
+      root.removeAttribute("data-portfolio-theme");
+      root.classList.remove("dark");
     };
   }, [theme, ready]);
 

@@ -1,0 +1,134 @@
+{
+  "soft": {
+    "title": {
+      "creative": {
+        "th": "Creative Soft Skills",
+        "en": "Creative / Motion Soft Skills"
+      },
+      "tech": {
+        "th": "Tech Soft Skills",
+        "en": "Tech / Dev Soft Skills"
+      }
+    },
+    "items": {
+      "creative": [
+        {
+          "th": "ทำงานภายใต้ deadline ได้โดยไม่กระทบคุณภาพงาน",
+          "en": "Thrives under tight deadlines without compromising quality"
+        },
+        {
+          "th": "บริหารหลายโปรเจกต์พร้อมกันได้อย่างมีประสิทธิภาพ",
+          "en": "Manages multiple projects simultaneously with sharp prioritization"
+        },
+        {
+          "th": "เรียนรู้เครื่องมือและเทคโนโลยีใหม่ ๆ อยู่เสมอ",
+          "en": "Constantly upskilling in emerging tools and creative technologies"
+        },
+        {
+          "th": "สื่อสารได้ดีทั้งในทีม creative และกับลูกค้า",
+          "en": "Communicates clearly across creative and client-facing teams"
+        },
+        {
+          "th": "ทำงานร่วมกับหลายทีมในกระบวนการผลิตงาน creative",
+          "en": "Cross-functional collaborator with a track record in creative production"
+        }
+      ],
+      "tech": [
+        {
+          "th": "แปลง creative brief ให้กลายเป็นระบบที่ scale ได้จริง",
+          "en": "Translates creative briefs into scalable technical systems"
+        },
+        {
+          "th": "ทำงานในสภาวะที่ requirement เปลี่ยนเร็วได้อย่างมีประสิทธิภาพ",
+          "en": "Comfortable shipping under ambiguous, fast-moving requirements"
+        },
+        {
+          "th": "เรียนรู้ stack ใหม่ได้เร็วและนำมาใช้จริงก่อนตลาดแมสส์",
+          "en": "Self-driven learner — consistently adopts new stacks before they become mainstream"
+        },
+        {
+          "th": "เชื่อมการสื่อสารระหว่าง designer, developer และ stakeholder",
+          "en": "Bridges communication between designers, developers, and stakeholders"
+        },
+        {
+          "th": "ทำงานข้ามทีมได้ดี มุ่งเน้นการส่งมอบงานจริง",
+          "en": "Strong cross-team collaborator with a bias toward action and delivery"
+        }
+      ]
+    }
+  },
+  "interests": {
+    "title": {
+      "th": "ความสนใจ",
+      "en": "Interests"
+    },
+    "items": [
+      {
+        "th": "AI และเทคโนโลยีเพื่องาน creative",
+        "en": "AI & emerging creative technology"
+      },
+      {
+        "th": "การเขียนโปรแกรมและระบบอัตโนมัติ",
+        "en": "Programming, automation, and systems thinking"
+      },
+      {
+        "th": "ภาพยนตร์ เกม และวัฒนธรรมดิจิทัล",
+        "en": "Cinema, gaming, and digital culture"
+      },
+      {
+        "th": "Generative AI, LLM และ pipeline อัตโนมัติสำหรับงาน creative",
+        "en": "Generative AI, LLM tooling, and creative automation pipelines"
+      },
+      {
+        "th": "Systems architecture และการออกแบบ workflow",
+        "en": "Systems architecture, workflow design, and developer tooling"
+      },
+      {
+        "th": "จุดตัดระหว่าง code, motion และ interactive experience",
+        "en": "The intersection of code, motion, and interactive experience"
+      }
+    ]
+  },
+  "craft": {
+    "title": {
+      "creative": {
+        "th": "Motion Graphics & VFX Craft",
+        "en": "Motion Graphics & VFX Craft"
+      },
+      "tech": {
+        "th": "Value Proposition",
+        "en": "Creative Dev — Value proposition"
+      }
+    },
+    "items": {
+      "creative": [
+        {
+          "th": "ประสบการณ์กว่า 10 ปีด้าน Motion Graphics และ Visual Effects สำหรับ TV, ดิจิทัล และ Live Event",
+          "en": "10+ years crafting motion graphics and visual effects for broadcast, digital, and live events"
+        },
+        {
+          "th": "เชี่ยวชาญด้าน 2D/3D Animation, VFX Compositing และ Post-production",
+          "en": "Specializes in 2D/3D animation, compositing, and cinematic post-production"
+        },
+        {
+          "th": "ผลงาน CGI Commercial และ Brand Content ให้กับแบรนด์ชั้นนำทั้งในและต่างประเทศ",
+          "en": "Delivered CGI commercials and brand content for major Thai and regional brands"
+        }
+      ],
+      "tech": [
+        {
+          "th": "พื้นฐาน 10+ ปีด้าน motion & VFX ทำให้เข้าใจทั้ง visual และ technical ในเวลาเดียวกัน",
+          "en": "10+ years in motion & VFX production — bringing visual intuition into every system built"
+        },
+        {
+          "th": "สร้างเครื่องมือที่ automate กระบวนการงาน creative ในระดับ production จริง",
+          "en": "Designs and develops tools that automate creative workflows at scale"
+        },
+        {
+          "th": "ประสบการณ์ full-stack ที่มาจาก production จริง ไม่ใช่แค่ทฤษฎี",
+          "en": "Full-stack experience grounded in real production constraints, not just theory"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "portrait": {
+    "local": "/portfolio/portrait.jpg"
+  },
+  "hero": {
+    "background": {
+      "framerId": "QOyIKsQm5mJHf49jrHwTdYvaZw",
+      "ext": "jpg"
+    },
+    "overlay": {
+      "framerId": "yZ8PusDUeagQQOcag4bjalNa3s",
+      "ext": "jpg"
+    },
+    "mark": {
+      "framerId": "7YeaErjr2kmowmTSNVyINY9EPY",
+      "ext": "png"
+    }
+  },
+  "experience": {
+    "goTheExtraMile": {
+      "framerId": "SD9KRLzYOj0WRG6WA8VsY8j47M",
+      "ext": "jpg"
+    },
+    "clickMotion": {
+      "framerId": "vS1HMSzk40UennRxB2pPWLPjLk",
+      "ext": "jpg"
+    },
+    "shortgun": {
+      "framerId": "oWfmUWK2P5y51g0duvph7cjhOgs",
+      "ext": "jpg"
+    }
+  },
+  "reelThumbs": {
+    "y2024": {
+      "framerId": "VtuWjJBpGDvfpOmZzT0JtRlM2c",
+      "ext": "jpg"
+    },
+    "y2023": {
+      "framerId": "TZIwdPVWSJLeqQsHwaKT2BRqLGY",
+      "ext": "jpg"
+    },
+    "y2022": {
+      "framerId": "ljtZea2GNHNBVhlno3Zxf4xhHaU",
+      "ext": "jpg"
+    },
+    "y2021": {
+      "framerId": "AFJ53rZdTILMbuyNZQ8YIPoXQME",
+      "ext": "jpg"
+    },
+    "y2020": {
+      "framerId": "bA4paoOmqJYH5ajhrTZy0UXMNE",
+      "ext": "jpg"
+    },
+    "y2019": {
+      "framerId": "J8cKuNA5fY2S8QHd3UVGHyas",
+      "ext": "jpg"
+    },
+    "adsMotion": {
+      "framerId": "7YeaErjr2kmowmTSNVyINY9EPY",
+      "ext": "png"
+    }
+  }
+}

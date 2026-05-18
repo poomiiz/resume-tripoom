@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
 import { pickLocale } from "../_lib/portfolio.ui";
-import { workToolIconUrl } from "../_lib/workTools.icons";
+import { workToolIconNeedsDarkInvert, workToolIconUrl } from "../_lib/workTools.icons";
 import { toolsForLane, type WorkTool, type WorkToolLane } from "../_lib/workTools.data";
 import { usePortfolioTheme } from "./usePortfolioTheme";
 
@@ -34,6 +34,7 @@ function ToolIconCell({
   const label = pickLocale(locale, tool.name);
   const src = workToolIconUrl(tool, theme);
   const showIcon = src && !iconFailed;
+  const invertOnDark = workToolIconNeedsDarkInvert(tool.id, theme);
 
   return (
     <li
@@ -63,17 +64,23 @@ function ToolIconCell({
           position: "relative",
           aspectRatio: "1 / 1",
           width: "100%",
-          maxWidth: 72,
+          maxWidth: 80,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           borderRadius: 16,
           border: "1px solid",
-          borderColor: theme === "dark" ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.08)",
-          background: theme === "dark" ? "#161616" : "#ffffff",
+          borderColor: theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.7)",
+          background:
+            theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.52)",
+          backdropFilter: "blur(14px) saturate(1.35)",
+          WebkitBackdropFilter: "blur(14px) saturate(1.35)",
           padding: 10,
           transition: "transform .25s, border-color .25s, box-shadow .25s",
-          boxShadow: theme === "dark" ? "none" : "0 4px 14px -6px rgba(0,0,0,0.12)",
+          boxShadow:
+            theme === "dark"
+              ? "inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.25)"
+              : "inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(20,20,31,0.06)",
         }}
       >
         <span
@@ -93,8 +100,8 @@ function ToolIconCell({
           <img
             src={src}
             alt=""
-            width={32}
-            height={32}
+            width={40}
+            height={40}
             loading="lazy"
             decoding="async"
             onError={() => setIconFailed(true)}
@@ -103,10 +110,11 @@ function ToolIconCell({
               zIndex: 1,
               width: "auto",
               height: "auto",
-              maxWidth: "68%",
-              maxHeight: "68%",
+              maxWidth: "76%",
+              maxHeight: "76%",
               objectFit: "contain",
               transition: "transform .4s",
+              filter: invertOnDark ? "brightness(0) invert(1)" : undefined,
             }}
           />
         ) : (
@@ -116,7 +124,7 @@ function ToolIconCell({
               position: "relative",
               zIndex: 1,
               fontWeight: 700,
-              fontSize: "0.7rem",
+              fontSize: "0.75rem",        /* 2xs – อยู่ใน scale */
               letterSpacing: "-0.02em",
               color: theme === "dark" ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)",
             }}
@@ -133,8 +141,8 @@ function ToolIconCell({
             display: "block",
             width: "100%",
             marginTop: 6,
-            fontSize: "0.62rem",
-            lineHeight: 1.2,
+            fontSize: "0.75rem",          /* 2xs – ขยับขึ้นจาก 0.62rem */
+            lineHeight: 1.25,
             fontWeight: 500,
             whiteSpace: "nowrap",
             overflow: "hidden",
@@ -149,21 +157,20 @@ function ToolIconCell({
   );
 }
 
-export function WorkToolsIconGrid({
+/** Grid of tool icons — reusable for a flat list */
+function ToolIconList({
+  tools,
   locale,
-  lane = "tech",
-  hideLabels = false,
+  theme,
+  hideLabels,
 }: {
+  tools: WorkTool[];
   locale: PortfolioLocale;
-  lane?: WorkToolLane;
+  theme: "light" | "dark";
   hideLabels?: boolean;
 }) {
-  const { theme } = usePortfolioTheme();
-  const tools = toolsForLane(lane);
-
   return (
     <ul
-      className="portfolio-tool-icons"
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fill, minmax(64px, 1fr))",
@@ -173,12 +180,103 @@ export function WorkToolsIconGrid({
         listStyle: "none",
         padding: 0,
         margin: 0,
-        marginTop: 8,
       }}
     >
       {tools.map((tool) => (
-        <ToolIconCell key={tool.id} tool={tool} locale={locale} theme={theme} hideLabel={hideLabels} />
+        <ToolIconCell
+          key={tool.id}
+          tool={tool}
+          locale={locale}
+          theme={theme}
+          hideLabel={hideLabels}
+        />
       ))}
     </ul>
+  );
+}
+
+/** Group heading used inside the tech card */
+function GroupHeading({
+  children,
+  theme,
+}: {
+  children: React.ReactNode;
+  theme: "light" | "dark";
+}) {
+  return (
+    <p
+      style={{
+        margin: "0 0 12px 0",
+        fontSize: "0.75rem",
+        fontWeight: 700,
+        letterSpacing: "0.14em",
+        textTransform: "uppercase",
+        color:
+          theme === "dark"
+            ? "rgba(255,255,255,0.32)"
+            : "rgba(0,0,0,0.32)",
+      }}
+    >
+      {children}
+    </p>
+  );
+}
+
+export function WorkToolsIconGrid({
+  locale,
+  lane = "tech",
+  hideLabels = false,
+  showGroups = false,
+}: {
+  locale: PortfolioLocale;
+  lane?: WorkToolLane;
+  hideLabels?: boolean;
+  /** แสดง group headers (AI · Dev) เหมาะกับ full-width tech card */
+  showGroups?: boolean;
+}) {
+  const { theme } = usePortfolioTheme();
+  const tools = toolsForLane(lane);
+
+  if (showGroups) {
+    const aiTools = tools.filter((t) => t.group === "ai");
+    const devTools = tools.filter((t) => t.group !== "ai");
+
+    return (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0 2rem",
+        }}
+      >
+        <div>
+          <GroupHeading theme={theme}>AI &amp; Automation</GroupHeading>
+          <ToolIconList
+            tools={aiTools}
+            locale={locale}
+            theme={theme}
+            hideLabels={hideLabels}
+          />
+        </div>
+        <div>
+          <GroupHeading theme={theme}>Design, Dev &amp; Ops</GroupHeading>
+          <ToolIconList
+            tools={devTools}
+            locale={locale}
+            theme={theme}
+            hideLabels={hideLabels}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <ToolIconList
+      tools={tools}
+      locale={locale}
+      theme={theme}
+      hideLabels={hideLabels}
+    />
   );
 }

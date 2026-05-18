@@ -2,18 +2,23 @@ import { FRAMER_BRAND_LOGOS, FRAMER_IMAGES } from "./framerAssets";
 import {
   JOBS,
   JOB_IMAGE_KEYS,
+  MOTION_REELS_EXTRA,
   PROFILE,
   SKILL_SECTIONS_V2,
   TIMELINE,
   type JobKey,
   type LocalizedText,
+  type SkillSection,
   type TimelineEntry,
 } from "./portfolio.data";
-import { CAREER_ARC_STEPS, type CareerArcStep } from "./careerArc.data";
-import { TECH_EXPERIENCE, type TechExperience } from "./techResume.data";
+import { CAREER_ARC_STEPS } from "./careerArc.data";
+import { TECH_EXPERIENCE } from "./techResume.data";
 import type { PortfolioLocale } from "./portfolio.ui";
 import { pickLocale } from "./portfolio.ui";
 import { youtubeWatchUrl } from "./youtube";
+import type { ExtraMotionReel, MotionGroup, UnifiedTimelinePhase } from "./portfolio.types";
+
+export type { ExtraMotionReel, MotionGroup, UnifiedTimelinePhase } from "./portfolio.types";
 
 function showreelHref(youtube: string): string {
   return youtubeWatchUrl(youtube);
@@ -21,6 +26,15 @@ function showreelHref(youtube: string): string {
 
 function reelThumb(thumbKey: keyof typeof FRAMER_IMAGES.reelThumbs): string {
   return FRAMER_IMAGES.reelThumbs[thumbKey];
+}
+
+function resolveReelThumb(showreel: {
+  thumbKey?: keyof typeof FRAMER_IMAGES.reelThumbs;
+  thumbUrl?: string;
+}): string {
+  if (showreel.thumbUrl) return showreel.thumbUrl;
+  if (showreel.thumbKey) return reelThumb(showreel.thumbKey);
+  return "";
 }
 
 export type ResolvedTimelineRow = {
@@ -47,30 +61,6 @@ export type ResolvedTimelineRow = {
     at: LocalizedText;
     continued: LocalizedText;
   };
-};
-
-export type MotionGroup = {
-  job: {
-    key: JobKey | "featured";
-    company: LocalizedText;
-    title: LocalizedText;
-    period: LocalizedText;
-    highlights: LocalizedText[];
-    clientLists?: import("./portfolio.data").JobClientList[];
-  };
-  reels: {
-    id: string;
-    yearLabel: string;
-    href: string;
-    thumb: string;
-    label: LocalizedText;
-  }[];
-};
-
-export type UnifiedTimelinePhase = {
-  arc: CareerArcStep;
-  techProjects: TechExperience[];
-  motionGroups: MotionGroup[];
 };
 
 const TIMELINE_UI = {
@@ -132,7 +122,7 @@ export function buildUnifiedTimeline(): UnifiedTimelinePhase[] {
             id: entry.id,
             yearLabel: "★",
             href: showreelHref(entry.showreel.youtube),
-            thumb: reelThumb(entry.showreel.thumbKey),
+            thumb: resolveReelThumb(entry.showreel),
             label: entry.showreel.label,
           },
         ],
@@ -151,7 +141,6 @@ export function buildUnifiedTimeline(): UnifiedTimelinePhase[] {
           title: job.title,
           period: job.period,
           highlights: toHighlightPairs(entry.jobKey),
-          clientLists: job.clientLists,
         },
         reels: [],
       };
@@ -162,14 +151,63 @@ export function buildUnifiedTimeline(): UnifiedTimelinePhase[] {
       id: `y-${entry.year}`,
       yearLabel: String(entry.year),
       href: showreelHref(entry.showreel.youtube),
-      thumb: reelThumb(entry.showreel.thumbKey),
+      thumb: resolveReelThumb(entry.showreel),
       label: entry.showreel.label || { th: `Showreel ${entry.year}`, en: `Showreel ${entry.year}` },
     });
   }
 
+  const reelSortKey = (yearLabel: string) => {
+    if (yearLabel === "★") return 9_999;
+    const n = Number(yearLabel);
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  /** ใหม่สุดอยู่บน เก่าสุดอยู่ล่าง */
+  for (const group of motionGroups) {
+    group.reels.sort((a, b) => reelSortKey(b.yearLabel) - reelSortKey(a.yearLabel));
+  }
+
+  /** Nina.digital — แสดงการ์ดข้อความแม้ยังไม่ใส่วิดีโอใน timeline */
+  if (!motionGroups.some((g) => g.job.key === "aiContent")) {
+    const job = JOBS.aiContent;
+    motionGroups.push({
+      job: {
+        key: "aiContent",
+        company: job.company,
+        title: job.title,
+        period: job.period,
+        highlights: toHighlightPairs("aiContent"),
+      },
+      reels: [],
+    });
+  }
+
+  const MOTION_GROUP_ORDER: (JobKey | "featured")[] = [
+    "shortgun",
+    "clickMotion",
+    "goExtra",
+    "featured",
+    "aiContent",
+  ];
+
+  const MOTION_PHASE_BY_JOB: Record<JobKey | "featured", string> = {
+    aiContent: "advanced-systems",
+    goExtra: "foundation",
+    clickMotion: "foundation",
+    shortgun: "foundation",
+    featured: "foundation",
+  };
+
   return CAREER_ARC_STEPS.map((arc) => {
     const phaseTech = TECH_EXPERIENCE.filter((t) => TECH_PHASE_MAP[t.id] === arc.id);
-    const phaseMotion = arc.id === "foundation" ? motionGroups : [];
+    const phaseMotion = motionGroups
+      .filter((g) => MOTION_PHASE_BY_JOB[g.job.key as JobKey | "featured"] === arc.id)
+      .sort(
+        (a, b) =>
+          MOTION_GROUP_ORDER.indexOf(a.job.key as JobKey | "featured") -
+          MOTION_GROUP_ORDER.indexOf(b.job.key as JobKey | "featured")
+      )
+      .reverse();
 
     return {
       arc,
@@ -190,14 +228,35 @@ export function getPortfolioImages() {
 }
 export function getProfile() { return PROFILE; }
 export function getSkillSections(): import("./portfolio.data").SkillSection[] {
-  return Object.entries(SKILL_SECTIONS_V2).map(([id, section]) => ({
-    id,
-    title: section.title,
-    items: section.items,
-  }));
+  return Object.entries(SKILL_SECTIONS_V2).map(([id, section]) => {
+    if (id === "interests" && section && "items" in section && Array.isArray(section.items)) {
+      const unified = section as { title: LocalizedText; items: LocalizedText[] };
+      return {
+        id,
+        title: { creative: unified.title, tech: unified.title },
+        items: { creative: unified.items, tech: unified.items },
+      };
+    }
+    return {
+      id,
+      title: section.title as SkillSection["title"],
+      items: section.items as SkillSection["items"],
+    };
+  });
 }
 export function getBrandLogos() { return FRAMER_BRAND_LOGOS; }
+
+export function getExtraMotionReels(): ExtraMotionReel[] {
+  return MOTION_REELS_EXTRA.map((entry) => ({
+    id: entry.id,
+    href: showreelHref(entry.url),
+    thumb: resolveReelThumb({
+      thumbKey: entry.thumbKey,
+      thumbUrl: entry.thumbUrl,
+    }),
+    label: entry.label,
+  }));
+}
 export function reelLabelForLocale(label: LocalizedText, locale: PortfolioLocale) {
   return pickLocale(locale, label);
 }
-export { PROFILE, SKILL_SECTIONS_V2 };

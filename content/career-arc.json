@@ -1,0 +1,34 @@
+{
+  "steps": [
+    {
+      "id": "foundation",
+      "period": {
+        "th": "2012 — 2024",
+        "en": "2012 — 2024"
+      },
+      "title": {
+        "th": "Senior Motion Artist & Visual Legacy",
+        "en": "Senior Motion Artist & Visual Legacy"
+      },
+      "body": {
+        "th": "ทำ Motion Graphics และ VFX จริงๆ มากว่า 12 ปี ให้แบรนด์อย่าง Samsung, Lexus, PTT และ SCB ทั้งงานโฆษณาทีวีและ Event ระดับประเทศ ช่วงนั้นสอนให้รู้ว่าความละเอียดในรายละเอียดคือสิ่งที่ทำให้งานดูมีคุณค่า",
+        "en": "Built a robust creative foundation as a Senior Motion Artist for global giants (Samsung, Lexus, PTT, SCB). Delivered high-end visuals for TV commercials and national-scale events, bridging traditional artistry with modern production techniques."
+      }
+    },
+    {
+      "id": "advanced-systems",
+      "period": {
+        "th": "2025 — ปัจจุบัน",
+        "en": "2025 — Present"
+      },
+      "title": {
+        "th": "AI Systems Architect & Content Director",
+        "en": "AI Systems Architect & Content Director"
+      },
+      "body": {
+        "th": "ตอนนี้ทำสองด้านควบกัน — กำกับ AI Content และพัฒนาระบบ Automation เอง สร้างแพลตฟอร์มอย่าง MoonRacle และ STAEDTLER ที่เชื่อมงานภาพระดับพรีเมียมเข้ากับระบบหลังบ้านที่ฉลาดพอจะทำงานแทนได้",
+        "en": "Evolved into a Creative Automation Architect and AI Content Director. Building intelligent full-stack platforms (MoonRacle, STAEDTLER) and AI Agents that bridge premium visual storytelling with robust, code-driven creative pipelines."
+      }
+    }
+  ]
+}

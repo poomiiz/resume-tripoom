@@ -34,7 +34,7 @@ export function MotionProjectsSection({ locale, timeline }: Props) {
                   <LocaleUiStack
                     path="timeline.year"
                     locale={locale}
-                    className="text-[0.7rem] font-bold uppercase tracking-[0.2em] opacity-40 block"
+                    className="text-[0.75rem] font-bold uppercase tracking-[0.14em] opacity-55 block"
                   />
                 ) : null}
               </div>
@@ -55,16 +55,16 @@ export function MotionProjectsSection({ locale, timeline }: Props) {
                       text={row.jobLabel.at}
                       locale={locale}
                       as="p"
-                      className="portfolio-accent text-[0.7rem] font-bold uppercase tracking-widest"
+                      className="portfolio-accent text-[0.75rem] font-bold uppercase tracking-[0.12em]"
                     />
                     <LocaleStack text={row.job.company} locale={locale} as="h3" className="mt-2 text-xl md:text-2xl font-bold" />
-                    <LocaleStack text={row.job.title} locale={locale} as="p" className="text-base opacity-70" />
-                    <LocaleStack text={row.job.period} locale={locale} as="p" className="text-xs opacity-40 font-medium" />
+                    <LocaleStack text={row.job.title} locale={locale} as="p" className="text-[0.9375rem] opacity-70 mt-0.5" />
+                    <LocaleStack text={row.job.period} locale={locale} as="p" className="text-[0.875rem] opacity-50 font-medium mt-0.5" />
                   </div>
 
                   {row.job.highlights.length > 0 && (
-                    <div className="md:border-l md:border-white/10 md:pl-8">
-                      <ul className="space-y-3 text-sm md:text-base leading-relaxed opacity-80">
+                    <div className="md:border-l md:border-black/[0.08] dark:md:border-white/10 md:pl-8">
+                      <ul className="space-y-3 text-[0.9375rem] md:text-base leading-relaxed opacity-85">
                         {row.job.highlights.map((h) => (
                           <li key={h.th} className="flex gap-3">
                             <span className="portfolio-accent shrink-0 mt-1.5 h-1.5 w-1.5 rounded-full" />
@@ -75,24 +75,24 @@ export function MotionProjectsSection({ locale, timeline }: Props) {
                     </div>
                   )}
                   {row.job.clientLists?.map((list) => (
-                    <div key={list.id} className="md:col-span-2 mt-2 pt-6 border-t border-white/10">
+                    <div key={list.id} className="md:col-span-2 mt-2 pt-6 border-t border-black/[0.08] dark:border-white/10">
                       <LocaleStack
                         text={list.label}
                         locale={locale}
                         as="p"
-                        className="text-[0.65rem] font-bold uppercase tracking-wider opacity-50"
+                        className="text-[0.75rem] font-bold uppercase tracking-[0.12em] opacity-55"
                       />
                       <LocaleStack
                         text={list.brands}
                         locale={locale}
                         as="p"
-                        className="portfolio-job-clients mt-2 text-sm leading-relaxed opacity-75"
+                        className="portfolio-job-clients mt-2 text-[0.9375rem] leading-relaxed opacity-75"
                       />
                     </div>
                   ))}
                 </div>
               ) : row.job && !row.job.isNewJob ? (
-                <div className="px-6 md:px-8 py-3 opacity-30 italic text-sm flex items-center gap-3">
+                <div className="px-6 md:px-8 py-3 opacity-50 italic text-[0.9375rem] flex items-center gap-3">
                   <span className="text-lg">↑</span>
                   <div className="flex gap-2 items-center">
                     <LocaleUiStack path="timeline.continued" locale={locale} />

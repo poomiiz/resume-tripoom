@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
+import type { PortfolioMode } from "../_lib/portfolioMode";
 
-export type PortfolioMode = "creative" | "tech";
+export type { PortfolioMode };
 
 export function ProfileToggle({
   mode,
@@ -30,7 +31,7 @@ export function ProfileToggle({
       <button
         type="button"
         onClick={() => setMode("creative")}
-        className={`relative z-10 flex-1 flex items-center justify-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest transition-colors duration-300 ${
+        className={`relative z-10 flex-1 flex items-center justify-center gap-2 text-[0.75rem] font-bold uppercase tracking-[0.1em] transition-colors duration-300 ${
           mode === "creative" ? "text-white dark:text-black" : "text-black/40 dark:text-white/40 hover:text-black/70 dark:hover:text-white/70"
         }`}
       >
@@ -41,11 +42,11 @@ export function ProfileToggle({
       <button
         type="button"
         onClick={() => setMode("tech")}
-        className={`relative z-10 flex-1 flex items-center justify-center gap-2 text-[0.65rem] font-bold uppercase tracking-widest transition-colors duration-300 ${
+        className={`relative z-10 flex-1 flex items-center justify-center gap-2 text-[0.75rem] font-bold uppercase tracking-[0.1em] transition-colors duration-300 ${
           mode === "tech" ? "text-white dark:text-black" : "text-black/40 dark:text-white/40 hover:text-black/70 dark:hover:text-white/70"
         }`}
       >
-        <span>💻</span>
+        <span>🤖</span>
         <span>Systems</span>
       </button>
       

@@ -1,0 +1,296 @@
+{
+  "tools": [
+    {
+      "id": "topaz",
+      "lane": "creative",
+      "group": "ai",
+      "name": { "th": "Topaz", "en": "Topaz" },
+      "fallbackAbbr": "TZ",
+      "hue": "215"
+    },
+    {
+      "id": "capcut",
+      "lane": "creative",
+      "group": "ai",
+      "name": { "th": "CapCut", "en": "CapCut" },
+      "fallbackAbbr": "CC",
+      "hue": "195"
+    },
+    {
+      "id": "ae",
+      "lane": "creative",
+      "group": "tool",
+      "name": { "th": "After Effects", "en": "After Effects" },
+      "iconSlug": "adobeaftereffects",
+      "fallbackAbbr": "AE",
+      "hue": "260"
+    },
+    {
+      "id": "ps",
+      "lane": "creative",
+      "group": "tool",
+      "name": { "th": "Photoshop", "en": "Photoshop" },
+      "iconSlug": "adobephotoshop",
+      "fallbackAbbr": "PS",
+      "hue": "210"
+    },
+    {
+      "id": "ai",
+      "lane": "creative",
+      "group": "tool",
+      "name": { "th": "Illustrator", "en": "Illustrator" },
+      "iconSlug": "adobeillustrator",
+      "fallbackAbbr": "AI",
+      "hue": "35"
+    },
+    {
+      "id": "pr",
+      "lane": "creative",
+      "group": "tool",
+      "name": { "th": "Premiere Pro", "en": "Premiere Pro" },
+      "iconSlug": "adobepremierepro",
+      "fallbackAbbr": "PR",
+      "hue": "280"
+    },
+    {
+      "id": "blender",
+      "lane": "creative",
+      "group": "tool",
+      "name": { "th": "Blender", "en": "Blender" },
+      "iconSlug": "blender",
+      "fallbackAbbr": "BL",
+      "hue": "30"
+    },
+    {
+      "id": "effecthouse",
+      "lane": "creative",
+      "group": "tool",
+      "name": { "th": "Effect House", "en": "Effect House" },
+      "fallbackAbbr": "EH",
+      "hue": "330"
+    },
+
+    {
+      "id": "gpt",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "ChatGPT", "en": "ChatGPT" },
+      "fallbackAbbr": "GPT",
+      "hue": "160"
+    },
+    {
+      "id": "codex",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "Codex", "en": "Codex" },
+      "fallbackAbbr": "Cx",
+      "hue": "160"
+    },
+    {
+      "id": "gemini",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "Gemini", "en": "Gemini" },
+      "fallbackAbbr": "Ge",
+      "hue": "260"
+    },
+    {
+      "id": "cursor",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "Cursor", "en": "Cursor" },
+      "fallbackAbbr": "Cu",
+      "hue": "220"
+    },
+    {
+      "id": "langgraph",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "LangGraph", "en": "LangGraph" },
+      "fallbackAbbr": "LG",
+      "hue": "200"
+    },
+    {
+      "id": "sora",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "Sora", "en": "Sora" },
+      "fallbackAbbr": "SO",
+      "hue": "0"
+    },
+    {
+      "id": "hermes",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "Hermes", "en": "Hermes" },
+      "fallbackAbbr": "HM",
+      "hue": "200"
+    },
+    {
+      "id": "openclaw",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "OpenClaw", "en": "OpenClaw" },
+      "fallbackAbbr": "OC",
+      "hue": "12"
+    },
+    {
+      "id": "notebooklm",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "NotebookLM", "en": "NotebookLM" },
+      "fallbackAbbr": "NB",
+      "hue": "180"
+    },
+    {
+      "id": "obsidian",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "Obsidian", "en": "Obsidian" },
+      "fallbackAbbr": "Ob",
+      "hue": "270"
+    },
+    {
+      "id": "flow",
+      "lane": "tech",
+      "group": "ai",
+      "name": { "th": "Google Flow", "en": "Google Flow" },
+      "fallbackAbbr": "GF",
+      "hue": "210"
+    },
+
+    {
+      "id": "nextjs",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Next.js", "en": "Next.js" },
+      "iconSlug": "nextdotjs",
+      "fallbackAbbr": "NX",
+      "hue": "0"
+    },
+    {
+      "id": "react",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "React", "en": "React" },
+      "iconSlug": "react",
+      "fallbackAbbr": "RE",
+      "hue": "195"
+    },
+    {
+      "id": "typescript",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "TypeScript", "en": "TypeScript" },
+      "iconSlug": "typescript",
+      "fallbackAbbr": "TS",
+      "hue": "210"
+    },
+    {
+      "id": "nodejs",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Node.js", "en": "Node.js" },
+      "iconSlug": "nodedotjs",
+      "fallbackAbbr": "NO",
+      "hue": "110"
+    },
+    {
+      "id": "python",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Python", "en": "Python" },
+      "iconSlug": "python",
+      "fallbackAbbr": "Py",
+      "hue": "210"
+    },
+    {
+      "id": "firebase",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Firebase", "en": "Firebase" },
+      "iconSlug": "firebase",
+      "fallbackAbbr": "FB",
+      "hue": "45"
+    },
+    {
+      "id": "googlecloud",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "GCP", "en": "Google Cloud" },
+      "iconSlug": "googlecloud",
+      "fallbackAbbr": "GC",
+      "hue": "210"
+    },
+    {
+      "id": "docker",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Docker", "en": "Docker" },
+      "iconSlug": "docker",
+      "fallbackAbbr": "DK",
+      "hue": "210"
+    },
+    {
+      "id": "postgresql",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "PostgreSQL", "en": "PostgreSQL" },
+      "iconSlug": "postgresql",
+      "fallbackAbbr": "PS",
+      "hue": "210"
+    },
+    {
+      "id": "redis",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Redis", "en": "Redis" },
+      "iconSlug": "redis",
+      "fallbackAbbr": "RD",
+      "hue": "0"
+    },
+    {
+      "id": "git",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Git", "en": "Git" },
+      "iconSlug": "git",
+      "fallbackAbbr": "GT",
+      "hue": "15"
+    },
+    {
+      "id": "github",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "GitHub", "en": "GitHub" },
+      "fallbackAbbr": "GH",
+      "hue": "0"
+    },
+    {
+      "id": "vercel",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Vercel", "en": "Vercel" },
+      "fallbackAbbr": "Vc",
+      "hue": "0"
+    },
+    {
+      "id": "cloudflare",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Cloudflare", "en": "Cloudflare" },
+      "iconSlug": "cloudflare",
+      "fallbackAbbr": "CF",
+      "hue": "28"
+    },
+    {
+      "id": "notion",
+      "lane": "tech",
+      "group": "tool",
+      "name": { "th": "Notion", "en": "Notion" },
+      "iconSlug": "notion",
+      "fallbackAbbr": "No",
+      "hue": "0"
+    }
+  ]
+}

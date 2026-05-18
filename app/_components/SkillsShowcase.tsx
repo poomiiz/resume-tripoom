@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
 import { LocaleStack } from "./LocaleStack";
-import type { PortfolioMode } from "./ProfileToggle";
+import type { PortfolioMode } from "../_lib/portfolioMode";
 import { SKILL_SECTIONS_V2 } from "../_lib/portfolio.data";
 
 type Props = {
@@ -37,7 +37,7 @@ function SectionHeader({
       <span className="portfolio-skill-section__icon text-[color:var(--pf-accent)] text-lg" aria-hidden>
         {glyph}
       </span>
-      <LocaleStack text={title} locale={locale} as="h2" className="text-base md:text-lg font-bold leading-tight text-black dark:text-white" />
+      <LocaleStack text={title} locale={locale} as="h2" className="text-base md:text-lg font-semibold leading-snug text-black dark:text-white" />
     </header>
   );
 }
@@ -49,15 +49,15 @@ function UnifiedNumberedList({ items, locale }: { items: { th: string; en: strin
   return (
     <ul className="portfolio-skill-list mt-6 space-y-4 text-left">
       {items.map((item, i) => (
-        <li key={item.th} className="portfolio-skill-item flex items-start gap-4 group">
-          <span className="portfolio-skill-num tabular-nums text-[color:var(--pf-accent)] font-black text-[0.65rem] mt-1 opacity-40 group-hover:opacity-100 transition-opacity" aria-hidden>
+        <li key={item.th} className="portfolio-skill-item flex items-start gap-4">
+          <span className="portfolio-skill-num tabular-nums text-[color:var(--pf-accent)] font-semibold text-[0.75rem] mt-0.5" aria-hidden>
             {String(i + 1).padStart(2, "0")}
           </span>
           <div className="flex-1">
             <LocaleStack 
               text={item} 
               locale={locale} 
-              className="text-[0.85rem] md:text-[0.95rem] leading-relaxed text-black/70 dark:text-white/70 group-hover:text-black dark:group-hover:text-white transition-all font-medium" 
+              className="portfolio-text-body" 
             />
           </div>
         </li>
@@ -81,7 +81,7 @@ function SkillSectionCard({
   return (
     <article
       className={[
-        "portfolio-skill-section portfolio-panel rounded-[2rem] p-7 md:p-8 h-full border border-black/[0.1] dark:border-white/5 bg-white dark:bg-white/[0.01] shadow-xl dark:shadow-none transition-all hover:border-[color:var(--pf-accent)]/30",
+        "portfolio-skill-section portfolio-panel rounded-[2rem] p-7 md:p-8 h-full",
         `portfolio-skill-section--${id}`,
       ].join(" ")}
     >
@@ -103,9 +103,13 @@ export function SkillsShowcase({ locale, displayMode, personalOnly, interestsOnl
   }
 
   if (interestsOnly) {
+    const interests = data.interests as {
+      title: { th: string; en: string };
+      items: { th: string; en: string }[];
+    };
     return (
-      <SkillSectionCard title={data.interests.title[displayMode]} id="interests" locale={locale}>
-        <UnifiedNumberedList items={data.interests.items[displayMode]} locale={locale} />
+      <SkillSectionCard title={interests.title} id="interests" locale={locale}>
+        <UnifiedNumberedList items={interests.items} locale={locale} />
       </SkillSectionCard>
     );
   }

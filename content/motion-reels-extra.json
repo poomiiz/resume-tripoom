@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ads-motion",
+    "url": "https://www.youtube.com/watch?v=nIN4jYTmnX4",
+    "thumbKey": "adsMotion",
+    "label": {
+      "th": "Ads Motion Compilation",
+      "en": "Ads Motion Compilation"
+    }
+  },
+  {
+    "id": "showreel-master",
+    "url": "https://www.youtube.com/watch?v=j2tRb8hwxfY",
+    "thumbKey": "y2023",
+    "label": {
+      "th": "Showreel รวม (Master)",
+      "en": "Master Showreel"
+    }
+  }
+]

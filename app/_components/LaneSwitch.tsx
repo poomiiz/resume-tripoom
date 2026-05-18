@@ -20,7 +20,7 @@ export function LaneSwitch({
 }) {
   return (
     <div
-      className="portfolio-lane-switch flex rounded-full p-0.5 text-[0.65rem] sm:text-xs font-semibold w-full max-w-xs sm:max-w-sm"
+      className="portfolio-lane-switch flex rounded-full p-0.5 text-[0.75rem] font-semibold w-full max-w-xs sm:max-w-sm"
       role="tablist"
     >
       {(["motion", "tech"] as const).map((id) => (
