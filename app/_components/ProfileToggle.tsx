@@ -36,7 +36,7 @@ export function ProfileToggle({
         }`}
       >
         <span>🎬</span>
-        <span>Creative</span>
+        <span>Art</span>
       </button>
 
       <button
@@ -47,7 +47,7 @@ export function ProfileToggle({
         }`}
       >
         <span>🤖</span>
-        <span>Systems</span>
+        <span>Tech</span>
       </button>
       
       {/* Dynamic Glow Overlay */}

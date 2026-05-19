@@ -8,17 +8,6 @@ import { workToolIconNeedsDarkInvert, workToolIconUrl } from "../_lib/workTools.
 import { toolsForLane, type WorkTool, type WorkToolLane } from "../_lib/workTools.data";
 import { usePortfolioTheme } from "./usePortfolioTheme";
 
-/**
- * NOTE on inline styles
- * ─────────────────────
- * The legacy global stylesheet defines `.portfolio-tool-icon__*` rules with
- * higher cascade priority than Tailwind utilities. To guarantee consistent
- * sizing across creative/tech lanes we drop those child class names entirely
- * and pin critical dimensions via inline `style={}` (specificity 1,0,0,0).
- * Only the outermost `portfolio-tool-icon` class is kept so theme-level
- * cosmetic rules can still apply.
- */
-
 function ToolIconCell({
   tool,
   locale,
@@ -57,7 +46,6 @@ function ToolIconCell({
       }
       title={label}
     >
-      {/* Visual tile — inline styles to defeat legacy CSS */}
       <div
         className="group-hover:border-[color:var(--tool-color)]"
         style={{
@@ -70,9 +58,8 @@ function ToolIconCell({
           justifyContent: "center",
           borderRadius: 16,
           border: "1px solid",
-          borderColor: theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.7)",
-          background:
-            theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.52)",
+          borderColor: theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)",
+          background: theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.80)",
           backdropFilter: "blur(14px) saturate(1.35)",
           WebkitBackdropFilter: "blur(14px) saturate(1.35)",
           padding: 10,
@@ -96,7 +83,7 @@ function ToolIconCell({
           }}
         />
         {showIcon ? (
-          // eslint-disable-next-line @next/next/no-img-element -- SVG จาก CDN; ต้องใช้ <img> เพื่อรองรับ onError
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={src}
             alt=""
@@ -124,7 +111,7 @@ function ToolIconCell({
               position: "relative",
               zIndex: 1,
               fontWeight: 700,
-              fontSize: "0.75rem",        /* 2xs – อยู่ใน scale */
+              fontSize: "0.75rem",
               letterSpacing: "-0.02em",
               color: theme === "dark" ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)",
             }}
@@ -141,7 +128,7 @@ function ToolIconCell({
             display: "block",
             width: "100%",
             marginTop: 6,
-            fontSize: "0.75rem",          /* 2xs – ขยับขึ้นจาก 0.62rem */
+            fontSize: "0.75rem",
             lineHeight: 1.25,
             fontWeight: 500,
             whiteSpace: "nowrap",
@@ -157,7 +144,6 @@ function ToolIconCell({
   );
 }
 
-/** Grid of tool icons — reusable for a flat list */
 function ToolIconList({
   tools,
   locale,
@@ -195,7 +181,6 @@ function ToolIconList({
   );
 }
 
-/** Group heading used inside the tech card */
 function GroupHeading({
   children,
   theme,
@@ -211,10 +196,7 @@ function GroupHeading({
         fontWeight: 700,
         letterSpacing: "0.14em",
         textTransform: "uppercase",
-        color:
-          theme === "dark"
-            ? "rgba(255,255,255,0.32)"
-            : "rgba(0,0,0,0.32)",
+        color: theme === "dark" ? "rgba(255,255,255,0.32)" : "rgba(0,0,0,0.32)",
       }}
     >
       {children}
@@ -227,14 +209,17 @@ export function WorkToolsIconGrid({
   lane = "tech",
   hideLabels = false,
   showGroups = false,
+  theme: themeProp,
 }: {
   locale: PortfolioLocale;
   lane?: WorkToolLane;
   hideLabels?: boolean;
-  /** แสดง group headers (AI · Dev) เหมาะกับ full-width tech card */
   showGroups?: boolean;
+  /** รับ theme จาก parent เพื่อให้ sync ถูกต้องเสมอ */
+  theme?: "light" | "dark";
 }) {
-  const { theme } = usePortfolioTheme();
+  const { theme: hookTheme } = usePortfolioTheme();
+  const theme = themeProp ?? hookTheme;
   const tools = toolsForLane(lane);
 
   if (showGroups) {
@@ -242,41 +227,18 @@ export function WorkToolsIconGrid({
     const devTools = tools.filter((t) => t.group !== "ai");
 
     return (
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "0 2rem",
-        }}
-      >
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 2rem" }}>
         <div>
           <GroupHeading theme={theme}>AI &amp; Automation</GroupHeading>
-          <ToolIconList
-            tools={aiTools}
-            locale={locale}
-            theme={theme}
-            hideLabels={hideLabels}
-          />
+          <ToolIconList tools={aiTools} locale={locale} theme={theme} hideLabels={hideLabels} />
         </div>
         <div>
           <GroupHeading theme={theme}>Design, Dev &amp; Ops</GroupHeading>
-          <ToolIconList
-            tools={devTools}
-            locale={locale}
-            theme={theme}
-            hideLabels={hideLabels}
-          />
+          <ToolIconList tools={devTools} locale={locale} theme={theme} hideLabels={hideLabels} />
         </div>
       </div>
     );
   }
 
-  return (
-    <ToolIconList
-      tools={tools}
-      locale={locale}
-      theme={theme}
-      hideLabels={hideLabels}
-    />
-  );
+  return <ToolIconList tools={tools} locale={locale} theme={theme} hideLabels={hideLabels} />;
 }

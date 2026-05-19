@@ -2,9 +2,9 @@
   "th": {
     "nav": {
       "story": "หน้าแรก",
-      "skills": "Systems",
-      "projects": "Motion",
-      "motion": "Motion",
+      "skills": "Tech",
+      "projects": "Art",
+      "motion": "Art",
       "contact": "ติดต่อ"
     },
     "theme": {
@@ -44,9 +44,9 @@
   "en": {
     "nav": {
       "story": "Home",
-      "skills": "Systems",
-      "projects": "Motion",
-      "motion": "Motion",
+      "skills": "Tech",
+      "projects": "Art",
+      "motion": "Art",
       "contact": "Contact"
     },
     "theme": {

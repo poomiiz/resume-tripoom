@@ -8,11 +8,6 @@ import { SkillsShowcase } from "./SkillsShowcase";
 import type { PortfolioMode } from "../_lib/portfolioMode";
 import { AnimatePresence, motion } from "framer-motion";
 
-/**
- * Card wrapper สำหรับแต่ละ lane
- * - Creative : full-width, flat grid 8 tools
- * - Tech     : full-width, 2 columns (AI | Dev) via showGroups
- */
 function ToolsCard({
   emoji,
   titlePath,
@@ -20,6 +15,7 @@ function ToolsCard({
   locale,
   lane,
   showGroups = false,
+  theme,
 }: {
   emoji: string;
   titlePath: string;
@@ -27,6 +23,7 @@ function ToolsCard({
   locale: PortfolioLocale;
   lane: "creative" | "tech";
   showGroups?: boolean;
+  theme?: "light" | "dark";
 }) {
   return (
     <article className="portfolio-skill-section portfolio-panel rounded-[1.75rem] p-6 md:p-8">
@@ -49,7 +46,7 @@ function ToolsCard({
           </span>
         </div>
       </header>
-      <WorkToolsIconGrid locale={locale} lane={lane} showGroups={showGroups} />
+      <WorkToolsIconGrid locale={locale} lane={lane} showGroups={showGroups} theme={theme} />
     </article>
   );
 }
@@ -58,15 +55,15 @@ export function SkillsLaneSection({
   sections,
   locale,
   displayMode = "creative",
+  theme,
 }: {
   sections: SkillSection[];
   locale: PortfolioLocale;
   displayMode?: PortfolioMode;
+  theme?: "light" | "dark";
 }) {
   return (
     <div className="mt-4 space-y-10">
-
-      {/* 1. Identity & Experience Summary */}
       <motion.div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="wait">
           <motion.div
@@ -95,7 +92,6 @@ export function SkillsLaneSection({
         </AnimatePresence>
       </motion.div>
 
-      {/* 2. Professional Tools & Stack — stacked layout */}
       <div className="space-y-5 pt-6 border-t border-black/[0.05] dark:border-white/5">
         <LocaleUiStack
           path="sections.tools"
@@ -104,16 +100,15 @@ export function SkillsLaneSection({
           className="text-base md:text-lg font-bold block text-black dark:text-white"
         />
 
-        {/* Motion Craft — full width, 8 tools in a single auto-fill row */}
         <ToolsCard
           emoji="🎬"
           titlePath="nav.motion"
           subtitle="Motion Craft · VFX · Creative Tools"
           locale={locale}
           lane="creative"
+          theme={theme}
         />
 
-        {/* Technical Stack — full width, 2 group columns: AI | Dev */}
         <ToolsCard
           emoji="💻"
           titlePath="nav.tech"
@@ -121,6 +116,7 @@ export function SkillsLaneSection({
           locale={locale}
           lane="tech"
           showGroups
+          theme={theme}
         />
       </div>
     </div>

@@ -255,8 +255,14 @@ export default function PortfolioView() {
                   text={profile.name}
                   locale={locale}
                   as="h1"
-                  className="portfolio-hero-name font-brand font-semibold leading-[1.08] text-white drop-shadow-2xl mb-5 text-left tracking-tight"
+                  className="portfolio-hero-name font-brand font-semibold leading-[1.08] text-white drop-shadow-2xl mb-3 text-left tracking-tight"
                 />
+
+                {profile.position && (
+                  <p className="text-sm md:text-base font-semibold uppercase tracking-[0.18em] text-white/50 text-left mb-5">
+                    {profile.position[locale] ?? profile.position.en}
+                  </p>
+                )}
 
                 <p className="text-lg md:text-xl text-white/90 font-medium text-left max-w-2xl leading-snug tracking-normal">
                   {mode === "creative" ? profile.tagline.creative[locale] : profile.tagline.tech[locale]}
@@ -331,7 +337,7 @@ export default function PortfolioView() {
             </span>
           </div>
           <div className="mt-8">
-            <SkillsLaneSection sections={skillSections} locale={pf.locale} displayMode={mode} />
+            <SkillsLaneSection sections={skillSections} locale={pf.locale} displayMode={mode} theme={theme} />
           </div>
         </section>
 

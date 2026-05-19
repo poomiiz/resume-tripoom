@@ -5,8 +5,8 @@ import { pickLocale } from "../_lib/portfolio.ui";
 import type { PortfolioLane } from "./portfolioLanes";
 
 const LABELS: Record<PortfolioLane, { th: string; en: string }> = {
-  motion: { th: "งาน Motion", en: "Motion work" },
-  tech: { th: "สาย Tech", en: "Tech" },
+  motion: { th: "Art", en: "Art" },
+  tech: { th: "Tech", en: "Tech" },
 };
 
 export function LaneSwitch({

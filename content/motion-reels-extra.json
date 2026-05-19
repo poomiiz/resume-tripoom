@@ -9,12 +9,120 @@
     }
   },
   {
-    "id": "showreel-master",
-    "url": "https://www.youtube.com/watch?v=j2tRb8hwxfY",
-    "thumbKey": "y2023",
+    "id": "nina-01",
+    "url": "https://youtube.com/shorts/6zEKp91ekSY",
+    "thumbUrl": "https://img.youtube.com/vi/6zEKp91ekSY/hqdefault.jpg",
     "label": {
-      "th": "Showreel รวม (Master)",
-      "en": "Master Showreel"
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-02",
+    "url": "https://youtube.com/shorts/rFx4x0Z41fc",
+    "thumbUrl": "https://img.youtube.com/vi/rFx4x0Z41fc/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-03",
+    "url": "https://youtube.com/shorts/6eAyf0U0hfc",
+    "thumbUrl": "https://img.youtube.com/vi/6eAyf0U0hfc/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-04",
+    "url": "https://youtube.com/shorts/GeHs-y_fxvA",
+    "thumbUrl": "https://img.youtube.com/vi/GeHs-y_fxvA/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-05",
+    "url": "https://youtube.com/shorts/lc5gzT-Esnk",
+    "thumbUrl": "https://img.youtube.com/vi/lc5gzT-Esnk/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-06",
+    "url": "https://youtube.com/shorts/ya6AX-ji_10",
+    "thumbUrl": "https://img.youtube.com/vi/ya6AX-ji_10/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-07",
+    "url": "https://youtube.com/shorts/l74Gm_b1q9o",
+    "thumbUrl": "https://img.youtube.com/vi/l74Gm_b1q9o/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-08",
+    "url": "https://youtube.com/shorts/YefqWsd-Mqc",
+    "thumbUrl": "https://img.youtube.com/vi/YefqWsd-Mqc/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-09",
+    "url": "https://youtube.com/shorts/v4NJCMqW5Tk",
+    "thumbUrl": "https://img.youtube.com/vi/v4NJCMqW5Tk/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-10",
+    "url": "https://youtube.com/shorts/oYIg8Gnp-uE",
+    "thumbUrl": "https://img.youtube.com/vi/oYIg8Gnp-uE/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-11",
+    "url": "https://youtube.com/shorts/BfOuoNniM8g",
+    "thumbUrl": "https://img.youtube.com/vi/BfOuoNniM8g/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-12",
+    "url": "https://youtube.com/shorts/j8abDGUQDKg",
+    "thumbUrl": "https://img.youtube.com/vi/j8abDGUQDKg/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
+    }
+  },
+  {
+    "id": "nina-13",
+    "url": "https://youtube.com/shorts/EGg8eWWrd6I",
+    "thumbUrl": "https://img.youtube.com/vi/EGg8eWWrd6I/hqdefault.jpg",
+    "label": {
+      "th": "Nina.digital — AI Storytelling",
+      "en": "Nina.digital — AI Storytelling"
     }
   }
 ]

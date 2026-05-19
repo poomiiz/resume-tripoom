@@ -31,7 +31,7 @@ function BrandCell({ logo, dupeIdx }: { logo: BrandLogo; dupeIdx: number }) {
           loading="lazy"
           decoding="async"
           onError={() => setFailed(true)}
-          className="max-h-[80%] max-w-[80%] object-contain opacity-80 transition-opacity group-hover:opacity-100"
+          className="max-h-[80%] max-w-[80%] object-contain"
         />
       )}
     </div>
