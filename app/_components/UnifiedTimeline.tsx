@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import Image from "next/image";
 
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
@@ -208,33 +210,6 @@ function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: Portfo
         </div>
       </div>
 
-      {/* Screenshot image */}
-      {entry.imageUrl && (
-        <div className="mt-4 overflow-hidden rounded-xl border border-black/[0.07] dark:border-white/[0.08] shadow-md">
-          {entry.url ? (
-            <a href={entry.url} target="_blank" rel="noopener noreferrer" className="block group">
-              <Image
-                src={entry.imageUrl}
-                alt={entry.project[locale]}
-                width={800}
-                height={450}
-                unoptimized
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              />
-            </a>
-          ) : (
-            <Image
-              src={entry.imageUrl}
-              alt={entry.project[locale]}
-              width={800}
-              height={450}
-              unoptimized
-              className="w-full h-auto object-cover"
-            />
-          )}
-        </div>
-      )}
-
       {/* Stack */}
       <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3 items-center text-left">
         <p className="portfolio-label text-black/45 dark:text-white/45 text-left">{techUi(locale, "stack")}</p>
@@ -250,7 +225,83 @@ function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: Portfo
           </li>
         ))}
       </ul>
+
+      {/* Screenshot — below text */}
+      {entry.imageUrl && (
+        <TechImageBlock
+          imageUrl={entry.imageUrl}
+          alt={entry.project[locale]}
+          url={entry.url}
+        />
+      )}
     </article>
+  );
+}
+
+function TechImageBlock({ imageUrl, alt, url }: { imageUrl: string; alt: string; url?: string }) {
+  const [lightbox, setLightbox] = useState(false);
+
+  return (
+    <>
+      <div className="mt-5 overflow-hidden rounded-xl border border-black/[0.07] dark:border-white/[0.08] shadow-md">
+        {url ? (
+          <a href={url} target="_blank" rel="noopener noreferrer" className="block group">
+            <Image
+              src={imageUrl}
+              alt={alt}
+              width={800}
+              height={450}
+              unoptimized
+              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setLightbox(true)}
+            className="block w-full group focus:outline-none"
+            aria-label="ขยายรูป"
+          >
+            <Image
+              src={imageUrl}
+              alt={alt}
+              width={800}
+              height={450}
+              unoptimized
+              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+            <span className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 text-white text-xs px-2 py-1 rounded-lg backdrop-blur-sm">
+              ⤢ ขยาย
+            </span>
+          </button>
+        )}
+      </div>
+
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+          onClick={() => setLightbox(false)}
+        >
+          <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              onClick={() => setLightbox(false)}
+              className="absolute -top-10 right-0 text-white/70 hover:text-white text-sm font-semibold flex items-center gap-1.5"
+            >
+              <span aria-hidden>✕</span> Close
+            </button>
+            <Image
+              src={imageUrl}
+              alt={alt}
+              width={1600}
+              height={900}
+              unoptimized
+              className="w-full h-auto rounded-2xl shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

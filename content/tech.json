@@ -510,7 +510,8 @@
           "th": "ใช้ Visual Scripting เพื่อสร้างประสบการณ์ AR ที่ซับซ้อนและโต้ตอบกับผู้ใช้ได้แบบ Real-time",
           "en": "Used Visual Scripting to create complex, real-time interactive AR experiences"
         }
-      ]
+      ],
+      "imageUrl": "/portfolio/tech/tiktok-ar.png"
     }
   ]
 }
