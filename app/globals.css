@@ -40,7 +40,7 @@
   --pf-bg: #f6f4ef;
   --pf-bg-elevated: #ffffff;
   --pf-text: #14141f;
-  --pf-muted: #5c5c6f;
+  --pf-muted: #48485a;
   --pf-border: rgba(20, 20, 31, 0.1);
   --pf-accent: #c2410c;
   --pf-accent-soft: rgba(194, 65, 12, 0.12);
@@ -188,6 +188,9 @@ html:has(.portfolio-page) {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
 }
 
 .portfolio-section-heading {
@@ -195,6 +198,27 @@ html:has(.portfolio-page) {
   line-height: 1.25;
   font-weight: 700;
   letter-spacing: -0.022em;
+}
+
+/** แถบ Motion / Systems ใต้แคปซูลเฟสแรกของ timeline — เล็กกว่าหัวในแคปซูล ~15% */
+.portfolio-journey-craft-line-under-chip {
+  font-size: calc(clamp(1.0625rem, 3.1vw, 1.5rem) * 0.85);
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+/** หัวในแคปซูลของแต่ละเฟส (timeline เท่านั้น) — ใหญ่ขึ้นจาก portfolio-label เดิม ไม่สลับข้อความ */
+.portfolio-phase-chip-title {
+  font-size: clamp(1.0625rem, 3.1vw, 1.5rem);
+  line-height: 1.22;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .portfolio-text-body-strong {
@@ -611,7 +635,12 @@ html:has(.portfolio-page) {
 }
 .portfolio-nav-link { color: var(--pf-muted); }
 .portfolio-nav-link:hover { color: var(--pf-accent); }
-.portfolio-section-label { color: var(--pf-muted); }
+.portfolio-section-label {
+  color: color-mix(in srgb, var(--pf-muted) 78%, var(--pf-text) 22%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
 .portfolio-accent { color: var(--pf-accent); }
 .portfolio-glass,
 .portfolio-panel {
@@ -1355,9 +1384,14 @@ body {
   letter-spacing: 0;
 }
 
+[data-locale="th"] .portfolio-phase-chip-title,
+[data-locale="th"] .portfolio-journey-craft-line-under-chip {
+  letter-spacing: 0.04em;
+}
+
 /* ── Dark mode muted text: เพิ่ม contrast เล็กน้อย ── */
 .portfolio-page[data-portfolio-theme="dark"] {
-  --pf-muted: #adb5cc; /* เดิม #9ca3b8 → สว่างขึ้น ~0.5 stop เพื่อ contrast 5.2:1 */
+  --pf-muted: #b8c0d4; /* อ่านชัดขึ้นบนพื้นมืม — เดิม #adb5cc */
 }
 
 /* ─────────────────────────────────────────────────────────────────

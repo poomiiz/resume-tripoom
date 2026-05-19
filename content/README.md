@@ -13,6 +13,7 @@
 | `skills.json` | ทักษะ / interests |
 | `media.json` | รูป hero, งาน, thumbnail วิดีโอ |
 | `brands.json` | โลโก้แบรนด์ |
+| `education.json` | ประวัติการศึกษา (สองภาษา) |
 | `career-arc.json` | เส้นทางอาชีพสั้น ๆ |
 | `tech.json` | โปรไฟล์ tech + โปรเจกต์ |
 | `work-tools.json` | ไอคอนเครื่องมือ |

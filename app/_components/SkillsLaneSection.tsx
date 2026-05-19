@@ -41,7 +41,7 @@ function ToolsCard({
             as="h2"
             className="text-[0.875rem] font-bold uppercase tracking-[0.18em] text-black/80 dark:text-white/80 block truncate"
           />
-          <span className="text-[0.75rem] uppercase tracking-widest text-black/45 dark:text-white/35 font-semibold text-left mt-0.5">
+          <span className="text-[0.75rem] uppercase tracking-widest text-black/62 dark:text-white/52 font-semibold text-left mt-0.5">
             {subtitle}
           </span>
         </div>

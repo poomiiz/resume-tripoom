@@ -28,6 +28,9 @@
       "timeline": "Showreel รายปี",
       "brands": "แบรนด์",
       "brandsTitle": "แบรนด์ที่เคยร่วมงาน",
+      "education": "การศึกษา",
+      "educationTitle": "ประวัติการศึกษา🎓",
+      "educationTagline": "ม.รังสิต · คณะดิจิทัลอาร์ต",
       "extraReels": "วิดีโอเพิ่มเติม",
       "contact": "ติดต่อได้ที่"
     },
@@ -70,6 +73,9 @@
       "timeline": "Yearly Showreels",
       "brands": "Brands",
       "brandsTitle": "Experience Working With Brands",
+      "education": "Education",
+      "educationTitle": "Education",
+      "educationTagline": "Rangsit University · B.F.A. Computer Art",
       "extraReels": "More videos",
       "contact": "Contact"
     },

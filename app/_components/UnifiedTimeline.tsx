@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import Image from "next/image";
 
@@ -212,7 +212,7 @@ function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: Portfo
 
       {/* Stack */}
       <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3 items-center text-left">
-        <p className="portfolio-label text-black/45 dark:text-white/45 text-left">{techUi(locale, "stack")}</p>
+        <p className="portfolio-label text-black/65 dark:text-white/62 text-left">{techUi(locale, "stack")}</p>
         <LocaleStack text={entry.stack} locale={locale} as="p" className="portfolio-text-subtitle text-left" />
       </div>
 
@@ -328,24 +328,38 @@ export function UnifiedTimeline({
 
   const trackClass = "portfolio-journey-track";
 
+  const orderedPhases = useMemo(() => {
+    const raw = displayMode === "creative" ? [...journey].reverse() : journey;
+    return raw.filter((phase) => {
+      if (displayMode === "creative" && phase.motionGroups.length === 0) return false;
+      if (displayMode === "tech" && phase.arc.id === "foundation" && phase.techProjects.length === 0)
+        return false;
+      return true;
+    });
+  }, [journey, displayMode]);
+
   return (
     <div className="portfolio-unified-timeline relative mx-auto max-w-5xl px-4 md:px-6">
       <div className="space-y-16 md:space-y-20">
-        {(displayMode === "creative" ? [...journey].reverse() : journey).map((phase) => {
-          if (displayMode === "creative" && phase.motionGroups.length === 0) return null;
-          if (displayMode === "tech" && phase.arc.id === "foundation" && phase.techProjects.length === 0) return null;
-
-          return (
+        {orderedPhases.map((phase, phaseIdx) => (
             <div key={phase.arc.id} className="relative">
-              <div className="md:flex md:justify-center mb-10 md:mb-12">
-                <div className="portfolio-glass-chip relative z-20 rounded-full px-8 py-3 text-black dark:text-white">
+              <div className="mb-10 flex flex-col items-start gap-2 md:mb-12 md:items-center md:text-center">
+                <div className="portfolio-glass-chip relative z-20 inline-flex max-w-full rounded-full px-7 py-3.5 text-black dark:text-white md:px-10 md:py-4">
                   <LocaleStack
                     text={phaseChipTitle(phase, displayMode)}
                     locale={locale}
                     as="h3"
-                    className="portfolio-label text-center text-black dark:text-white text-wrap"
+                    className="portfolio-phase-chip-title text-center text-black dark:text-white text-wrap"
                   />
                 </div>
+                {phaseIdx === 0 && (
+                  <p className="portfolio-journey-craft-line-under-chip flex flex-wrap items-center justify-start gap-1.5 text-[color:var(--pf-accent)] opacity-95 md:justify-center">
+                    <span aria-hidden>{displayMode === "creative" ? "🎨" : "🔗"}</span>
+                    <span>
+                      {displayMode === "creative" ? "Motion & VFX Craft" : "Systems & Architecture"}
+                    </span>
+                  </p>
+                )}
               </div>
 
               <div className="mb-8 md:mb-10 text-left">
@@ -410,8 +424,7 @@ export function UnifiedTimeline({
                 )}
               </div>
             </div>
-          );
-        })}
+        ))}
       </div>
     </div>
   );

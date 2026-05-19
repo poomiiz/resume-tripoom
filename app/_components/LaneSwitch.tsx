@@ -32,7 +32,7 @@ export function LaneSwitch({
           onClick={() => setLane(id)}
           className={[
             "flex-1 px-3 py-1.5 rounded-full transition-colors",
-            lane === id ? "portfolio-lane-switch__active" : "opacity-60 hover:opacity-90",
+            lane === id ? "portfolio-lane-switch__active" : "opacity-75 hover:opacity-100",
           ].join(" ")}
         >
           {pickLocale(locale, LABELS[id])}

@@ -7,9 +7,11 @@ import techJson from "../../../content/tech.json";
 import workToolsJson from "../../../content/work-tools.json";
 import uiJson from "../../../content/ui.json";
 import motionReelsExtraJson from "../../../content/motion-reels-extra.json";
+import educationJson from "../../../content/education.json";
 
 import type {
   CareerArcStep,
+  EducationRecord,
   JobKey,
   LocalizedText,
   ReelThumbKey,
@@ -84,6 +86,8 @@ export const TECH_EXPERIENCE = techJson.experiences as TechExperience[];
 export const WORK_TOOLS = workToolsJson.tools as WorkTool[];
 
 export const UI = uiJson;
+
+export const EDUCATION = educationJson as EducationRecord;
 
 export const MOTION_REELS_EXTRA = motionReelsExtraJson as {
   id: string;

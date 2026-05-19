@@ -16,6 +16,8 @@ import { ProfileToggle } from "./ProfileToggle";
 import type { PortfolioMode } from "../_lib/portfolioMode";
 import { ContactDock, PORTFOLIO_OPEN_CONTACT_EVENT } from "./ContactDock";
 import { BrandsMarquee } from "./BrandsMarquee";
+import { EducationSection } from "./EducationSection";
+import { EDUCATION } from "../_lib/content";
 import { AnimatePresence, motion } from "framer-motion";
 
 function scrollToSection(id: string) {
@@ -49,7 +51,7 @@ function SectionLabel({
         path={path}
         locale={locale}
         as="p"
-        className="portfolio-section-label text-[0.75rem] font-semibold uppercase tracking-[0.16em] block text-[color:var(--pf-accent)]/80"
+        className="portfolio-section-label text-[0.75rem] font-semibold uppercase tracking-[0.16em] block text-[color:var(--pf-accent)]"
       />
       <span className="hidden sm:block h-px flex-1 bg-gradient-to-r from-[color:var(--pf-accent)]/40 via-black/[0.06] to-transparent dark:via-white/10" />
     </div>
@@ -310,16 +312,7 @@ export default function PortfolioView() {
 
       <main className="mx-auto max-w-6xl px-5 space-y-24 md:space-y-40 mt-16 md:mt-28">
         <section id="journey" className="scroll-mt-24">
-          <SectionLabel path="sections.story" locale={locale} icon={mode === "creative" ? "🎬" : "🏗️"} />
-          <div className="flex flex-col md:flex-row md:items-baseline gap-2 mt-4 mb-10 text-left">
-            <LocaleUiStack path="sections.story" locale={locale} as="h2" className="portfolio-section-heading block text-black dark:text-white" />
-            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
-              <span aria-hidden>{mode === "creative" ? "🎨" : "🔗"}</span>
-              {mode === 'creative' ? "Motion & VFX Craft" : "Systems & Architecture"}
-            </span>
-          </div>
-          
-          <div className="mt-12">
+          <div className="mt-0 md:mt-2">
             <UnifiedTimeline
               journey={unifiedJourney}
               locale={pf.locale}
@@ -336,7 +329,7 @@ export default function PortfolioView() {
           <SectionLabel path="sections.skills" locale={locale} icon={mode === "creative" ? "✨" : "⚙️"} />
           <div className="mt-4 flex flex-col md:flex-row md:items-baseline gap-2">
             <LocaleUiStack path="sections.skills" locale={locale} as="h2" className="portfolio-section-heading block text-black dark:text-white text-left" />
-            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
+            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-90 flex items-center gap-1.5">
               <span aria-hidden>{mode === "creative" ? "🎞️" : "🧠"}</span>
               {mode === "creative" ? "Tools & Craft Stack" : "Engineering Stack"}
             </span>
@@ -351,7 +344,7 @@ export default function PortfolioView() {
           <SectionLabel path="sections.brands" locale={locale} icon="🌐" />
           <div className="mt-4 flex flex-col md:flex-row md:items-baseline gap-2 mb-10">
             <LocaleUiStack path="sections.brandsTitle" locale={locale} as="h2" className="portfolio-section-heading block text-black dark:text-white text-left" />
-            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-60 flex items-center gap-1.5">
+            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-90 flex items-center gap-1.5">
               <span aria-hidden>🏢</span>
               Trusted Collaborations
             </span>
@@ -359,6 +352,28 @@ export default function PortfolioView() {
 
           {/* Dual marquee — row 1 LTR, row 2 RTL, fade mask on both sides */}
           <BrandsMarquee logos={brandLogos} />
+        </section>
+
+        <section id="education" className="scroll-mt-24 pt-10 text-left">
+          <SectionLabel path="sections.education" locale={locale} icon="🎓" />
+          <div className="mt-4 mb-8 flex flex-col gap-2 md:flex-row md:items-baseline">
+            <LocaleUiStack
+              path="sections.educationTitle"
+              locale={locale}
+              as="h2"
+              className="portfolio-section-heading block text-left text-black dark:text-white"
+            />
+            <span className="portfolio-label flex items-center gap-1.5 text-[color:var(--pf-accent)] opacity-90">
+              <span aria-hidden>📚</span>
+              <LocaleUiStack
+                path="sections.educationTagline"
+                locale={locale}
+                as="span"
+                className="portfolio-label text-[color:var(--pf-accent)] opacity-90"
+              />
+            </span>
+          </div>
+          <EducationSection data={EDUCATION} locale={locale} />
         </section>
 
       </main>

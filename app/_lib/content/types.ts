@@ -72,6 +72,14 @@ export type TechExperience = {
   imageUrl?: string;
 };
 
+/** บล็อกประวัติการศึกษา (สองภาษา) */
+export type EducationRecord = {
+  degreeLine: LocalizedText;
+  institution: LocalizedText;
+  highlightsLabel: LocalizedText;
+  highlightsBody: LocalizedText;
+};
+
 export type WorkToolLane = "creative" | "tech";
 export type WorkToolGroup = "ai" | "tool";
 
