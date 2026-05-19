@@ -320,8 +320,13 @@ export default function PortfolioView() {
           </div>
           
           <div className="mt-12">
-            <UnifiedTimeline journey={unifiedJourney} locale={pf.locale} displayMode={mode} />
-            {mode === "creative" && extraMotionReels.length > 0 && (
+            <UnifiedTimeline
+              journey={unifiedJourney}
+              locale={pf.locale}
+              displayMode={mode}
+              ninaReels={extraMotionReels.filter((r) => r.id.startsWith("nina-"))}
+            />
+            {mode === "creative" && extraMotionReels.some((r) => !r.id.startsWith("nina-")) && (
               <ExtraMotionReels reels={extraMotionReels} locale={locale} />
             )}
           </div>

@@ -67,6 +67,9 @@ export type TechExperience = {
   project: LocalizedText;
   stack: LocalizedText;
   outcomes: LocalizedText[];
+  url?: string;
+  status?: LocalizedText;
+  imageUrl?: string;
 };
 
 export type WorkToolLane = "creative" | "tech";

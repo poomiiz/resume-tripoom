@@ -4,8 +4,9 @@
 
 ## 🛠️ รายละเอียดโปรเจกต์
 - **Tech Stack:** Next.js (Static Export), Tailwind CSS, Framer Motion
-- **Hosting:** GitHub Pages
-- **URL:** [https://moonracle.github.io/resume-tripoom/](https://moonracle.github.io/resume-tripoom/) (หรือโดเมนที่ตั้งค่าไว้)
+- **Hosting:** GitHub Pages (โดเมน: `public/CNAME`)
+- **URL:** [https://resume-tripoom.moonracle.com/](https://resume-tripoom.moonracle.com/) — build ค่าเริ่มต้นไม่ใช้ `basePath` (assets ที่ `/_next/...`)
+- **GitHub.io แบบโปรเจกต์** (`/<repo>/`): ตอน build ตั้ง `NEXT_BASE_PATH=/resume-tripoom` แล้วค่อย deploy
 
 ## 📂 การจัดการไฟล์
 - **Source:** `app/` (Next.js App Router)

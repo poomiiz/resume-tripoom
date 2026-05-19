@@ -1,7 +1,10 @@
 "use client";
 
+import Image from "next/image";
+
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
 import type { UnifiedTimelinePhase, MotionGroup } from "../_lib/portfolio.types";
+import type { ExtraMotionReel } from "../_lib/portfolio.types";
 import { PROFILE, type LocalizedText } from "../_lib/portfolio.data";
 import type { TechExperience } from "../_lib/techResume.data";
 import { TECH_SKILL_GROUPS } from "../_lib/techResume.data";
@@ -9,6 +12,7 @@ import { techUi } from "../_lib/techResume.ui";
 import { extractYoutubeVideoId } from "../_lib/youtube";
 import { LocaleStack } from "./LocaleStack";
 import { ExternalReelCard } from "./ExternalReelCard";
+import { NinaReelCard } from "./ExtraMotionReels";
 import type { PortfolioMode } from "../_lib/portfolioMode";
 
 function phaseChipTitle(phase: UnifiedTimelinePhase, displayMode: PortfolioMode): LocalizedText {
@@ -53,8 +57,18 @@ function MotionReelCard({
 }
 
 /** การ์ดงานมาตรฐาน: ช่วงเวลา → บริษัท → ตำแหน่ง → bullet → วิดีโอ */
-function UnifiedMotionGroup({ group, locale }: { group: MotionGroup; locale: PortfolioLocale }) {
+function UnifiedMotionGroup({
+  group,
+  locale,
+  ninaReels,
+}: {
+  group: MotionGroup;
+  locale: PortfolioLocale;
+  ninaReels?: ExtraMotionReel[];
+}) {
   const reels = group.reels;
+  const isNinaCard = group.job.key === "aiContent";
+  const showNina = isNinaCard && ninaReels && ninaReels.length > 0;
 
   return (
     <article className="portfolio-panel portfolio-job-card text-left w-full">
@@ -76,6 +90,20 @@ function UnifiedMotionGroup({ group, locale }: { group: MotionGroup; locale: Por
             </li>
           ))}
         </ul>
+      )}
+
+      {/* Nina.digital inline video grid */}
+      {showNina && (
+        <div className="mt-5 pt-4 border-t border-black/[0.06] dark:border-white/[0.06]">
+          <p className="portfolio-label text-[color:var(--pf-accent)] mb-3 text-xs">
+            AI Storytelling Videos
+          </p>
+          <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-1.5 sm:gap-2">
+            {ninaReels!.map((reel) => (
+              <NinaReelCard key={reel.id} reel={reel} size="small" />
+            ))}
+          </div>
+        </div>
       )}
 
       {reels.length > 0 && (
@@ -149,21 +177,71 @@ function TechExpertiseStrip({ locale }: { locale: PortfolioLocale }) {
 function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: PortfolioLocale }) {
   return (
     <article className="tech-task-item portfolio-tech-task py-4 md:py-5 border-0 text-left">
-      <div className="text-left">
-        <LocaleStack
-          text={entry.project}
-          locale={locale}
-          as="h3"
-          className="portfolio-job-card__company text-black dark:text-white text-left"
-        />
-        <LocaleStack text={entry.role} locale={locale} as="p" className="portfolio-job-card__title text-left" />
+      {/* Header row */}
+      <div className="flex items-start justify-between gap-3 text-left">
+        <div className="text-left">
+          <LocaleStack
+            text={entry.project}
+            locale={locale}
+            as="h3"
+            className="portfolio-job-card__company text-black dark:text-white text-left"
+          />
+          <LocaleStack text={entry.role} locale={locale} as="p" className="portfolio-job-card__title text-left" />
+        </div>
+        <div className="flex items-center gap-2 shrink-0 mt-1">
+          {entry.status && (
+            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full border border-[color:var(--pf-accent)]/40 text-[color:var(--pf-accent)] bg-[color:var(--pf-accent)]/10">
+              {entry.status[locale]}
+            </span>
+          )}
+          {entry.url && (
+            <a
+              href={entry.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[0.7rem] font-semibold text-[color:var(--pf-accent)] hover:underline flex items-center gap-1 transition-opacity hover:opacity-80"
+            >
+              <span aria-hidden>↗</span>
+              {locale === "th" ? "เปิดลิงก์" : "View"}
+            </a>
+          )}
+        </div>
       </div>
 
+      {/* Screenshot image */}
+      {entry.imageUrl && (
+        <div className="mt-4 overflow-hidden rounded-xl border border-black/[0.07] dark:border-white/[0.08] shadow-md">
+          {entry.url ? (
+            <a href={entry.url} target="_blank" rel="noopener noreferrer" className="block group">
+              <Image
+                src={entry.imageUrl}
+                alt={entry.project[locale]}
+                width={800}
+                height={450}
+                unoptimized
+                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              />
+            </a>
+          ) : (
+            <Image
+              src={entry.imageUrl}
+              alt={entry.project[locale]}
+              width={800}
+              height={450}
+              unoptimized
+              className="w-full h-auto object-cover"
+            />
+          )}
+        </div>
+      )}
+
+      {/* Stack */}
       <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3 items-center text-left">
         <p className="portfolio-label text-black/45 dark:text-white/45 text-left">{techUi(locale, "stack")}</p>
         <LocaleStack text={entry.stack} locale={locale} as="p" className="portfolio-text-subtitle text-left" />
       </div>
 
+      {/* Outcomes */}
       <ul className="mt-6 space-y-4 text-left">
         {entry.outcomes.map((o, i) => (
           <li key={i} className="portfolio-highlight-item flex gap-5 text-left">
@@ -180,10 +258,12 @@ export function UnifiedTimeline({
   journey,
   locale,
   displayMode = "creative",
+  ninaReels,
 }: {
   journey: UnifiedTimelinePhase[];
   locale: PortfolioLocale;
   displayMode?: PortfolioMode;
+  ninaReels?: ExtraMotionReel[];
 }) {
   const groupTechByYear = (projects: TechExperience[]) => {
     const years: Record<string, TechExperience[]> = {};
@@ -198,18 +278,11 @@ export function UnifiedTimeline({
   const trackClass = "portfolio-journey-track";
 
   return (
-    <div
-      className="portfolio-unified-timeline relative mx-auto max-w-5xl px-4 md:px-6"
-    >
+    <div className="portfolio-unified-timeline relative mx-auto max-w-5xl px-4 md:px-6">
       <div className="space-y-16 md:space-y-20">
         {(displayMode === "creative" ? [...journey].reverse() : journey).map((phase) => {
-          if (displayMode === "creative" && phase.motionGroups.length === 0) {
-            return null;
-          }
-
-          if (displayMode === "tech" && phase.arc.id === "foundation" && phase.techProjects.length === 0) {
-            return null;
-          }
+          if (displayMode === "creative" && phase.motionGroups.length === 0) return null;
+          if (displayMode === "tech" && phase.arc.id === "foundation" && phase.techProjects.length === 0) return null;
 
           return (
             <div key={phase.arc.id} className="relative">
@@ -232,12 +305,11 @@ export function UnifiedTimeline({
                     as="p"
                     className="portfolio-phase-narrative__body text-left"
                   />
-
                 </article>
               </div>
 
               {displayMode === "tech" && phase.arc.id === "advanced-systems" && (
-                <div className="mb-10 -mx-4 md:-mx-6">
+                <div className="mb-10">
                   <TechExpertiseStrip locale={locale} />
                 </div>
               )}
@@ -249,22 +321,18 @@ export function UnifiedTimeline({
                       .flatMap(([year, projs]) => projs.map((entry) => ({ year, entry })))
                       .map(({ year, entry }, idx, arr) => {
                         const align =
-                          idx === arr.length - 1
-                            ? "right"
-                            : idx % 2 === 0
-                              ? "left"
-                              : "right";
+                          idx === arr.length - 1 ? "right" : idx % 2 === 0 ? "left" : "right";
                         return (
-                        <article
-                          key={entry.id}
-                          className={`portfolio-journey-item portfolio-journey-item--tech portfolio-journey-item--align-${align}`}
-                        >
-                          <span className="portfolio-journey-node" aria-hidden />
-                          <div className="portfolio-panel portfolio-tech-project-card text-left">
-                            <p className="portfolio-job-card__period">{year}</p>
-                            <TechTaskItem entry={entry} locale={locale} />
-                          </div>
-                        </article>
+                          <article
+                            key={entry.id}
+                            className={`portfolio-journey-item portfolio-journey-item--tech portfolio-journey-item--align-${align}`}
+                          >
+                            <span className="portfolio-journey-node" aria-hidden />
+                            <div className="portfolio-panel portfolio-tech-project-card text-left">
+                              <p className="portfolio-job-card__period">{year}</p>
+                              <TechTaskItem entry={entry} locale={locale} />
+                            </div>
+                          </article>
                         );
                       })}
                   </div>
@@ -280,7 +348,11 @@ export function UnifiedTimeline({
                         }`}
                       >
                         <span className="portfolio-journey-node" aria-hidden />
-                        <UnifiedMotionGroup group={group} locale={locale} />
+                        <UnifiedMotionGroup
+                          group={group}
+                          locale={locale}
+                          ninaReels={group.job.key === "aiContent" ? ninaReels : undefined}
+                        />
                       </article>
                     ))}
                   </div>

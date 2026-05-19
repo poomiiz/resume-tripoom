@@ -207,7 +207,8 @@
           "th": "การดูแล: สร้าง Dashboard สำหรับแสดงสถิติการใช้งานและรายละเอียดออเดอร์แบบ Real-time",
           "en": "Admin: Created real-time dashboard for claims log and daily statistics"
         }
-      ]
+      ],
+      "imageUrl": "/portfolio/tech/staedtler.jpg"
     },
     {
       "id": "moonracle-2026",
@@ -240,7 +241,13 @@
           "th": "ติดตั้ง Telegram Bridge สำหรับการแจ้งเตือนและการจัดการคิวงานอัตโนมัติ",
           "en": "Implemented Telegram Bridge for automated notifications and job queuing"
         }
-      ]
+      ],
+      "url": "https://www.moonracle.com",
+      "status": {
+        "th": "กำลังพัฒนา",
+        "en": "In Development"
+      },
+      "imageUrl": "/portfolio/tech/moonracle.png"
     },
     {
       "id": "ai-music-pipeline-2026",
@@ -257,19 +264,21 @@
         "en": "AI Music Production Pipeline (Suno to YouTube)"
       },
       "stack": {
-        "th": "Suno v3.5/4 · Python Automation · FFmpeg · YouTube API",
-        "en": "Suno v3.5/4 · Python Automation · FFmpeg · YouTube API"
+        "th": "Gemini AI · Suno · Google Flow · CapCut",
+        "en": "Gemini AI · Suno · Google Flow · CapCut"
       },
       "outcomes": [
         {
-          "th": "ออกแบบระบบ 'Suno-to-YouTube' Pipeline ที่ผสานทฤษฎีดนตรีเข้ากับ AI Prompt Engineering",
-          "en": "Designed 'Suno-to-YouTube' pipeline merging music theory with AI Prompt Engineering"
+          "th": "วาง pipeline ผลิตเพลงด้วย AI ตั้งแต่ต้นจนจบ — เขียน prompt ด้วย Gemini, สร้างเสียงด้วย Suno, ตัดต่อด้วย CapCut",
+          "en": "End-to-end AI music pipeline — prompt crafting with Gemini, audio generation with Suno, editing with CapCut"
         },
         {
-          "th": "สร้าง Workflow อัตโนมัติในการเจนเนอเรทวิดีโอจากเพลง AI ช่วยลดเวลาโปรดักชันได้กว่า 80%",
-          "en": "Built automated workflows for video generation from AI music, reducing production time by 80%"
+          "th": "ใช้ Google Flow จัดการขั้นตอนการผลิตและ upload ขึ้น YouTube โดยอัตโนมัติ",
+          "en": "Used Google Flow to orchestrate production steps and automate YouTube publishing"
         }
-      ]
+      ],
+      "url": "https://youtube.com/playlist?list=PLunaktEt8OuhZ__bqv7kMSMfkwCJDDER8&si=C1L5WnsoxtwcEncN",
+      "imageUrl": "/portfolio/tech/music-pipeline.png"
     },
     {
       "id": "ai-workspace-infra-2026",

@@ -434,35 +434,20 @@ html:has(.portfolio-page) {
 }
 
 .portfolio-tech-expertise-strip {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  padding: 0.25rem 1rem 0.85rem;
-  -webkit-overflow-scrolling: touch;
+  padding: 0.25rem 0;
 }
 
 .portfolio-tech-expertise-strip__track {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  width: max-content;
-  min-width: min(100%, 100%);
+  width: 100%;
 }
 
 .portfolio-tech-expertise-strip__card {
-  flex: 0 0 min(88vw, 22.5rem);
-  scroll-snap-align: start;
+  width: 100%;
 }
 
-@media (min-width: 1280px) {
-  .portfolio-tech-expertise-strip {
-    overflow-x: auto;
-  }
-
-  .portfolio-tech-expertise-strip__card {
-    flex: 0 0 min(18rem, calc((100% - 5rem) / 6));
-  }
-}
 
 .portfolio-tech-project-card {
   border-radius: 1.35rem;
