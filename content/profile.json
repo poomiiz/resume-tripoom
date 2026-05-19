@@ -9,7 +9,7 @@
   },
   "mainRole": {
     "creative": {
-      "th": "Senior Motion Artist & AI Content Director",
+      "th": "ซีเนียร์โมชั่นอาร์ตติส และผู้กำกับคอนเทนต์ AI",
       "en": "Senior Motion Artist & AI Content Director"
     },
     "tech": {
@@ -29,12 +29,11 @@
   },
   "subtitle": {
     "creative": {
-      "th": "12 ปีของการทำ Motion Design ให้แบรนด์ใหญ่ทั้ง Samsung, Lexus, PTT และ SCB จนมองเห็นว่า AI จะเปลี่ยนวิธีทำงานสร้างสรรค์ไปอย่างสิ้นเชิง จึงผันตัวสู่ AI Content Director ผสานสกิลการเล่าเรื่องที่สะสมมากับเทคโนโลยี Generative AI จนสามารถดูแลงานโปรดักชันแบบครบวงจรได้คนเดียว",
-      "en": "12+ years as a Senior Motion Artist for global giants (Samsung, Lexus, PTT, SCB), evolved into an AI Content Director. Bridges professional visual storytelling and Generative AI — directing and producing full-scale digital narratives and cinematic visuals end-to-end through technology."
-    },
+"th": "สร้างสรรค์ผลงานให้กับแบรนด์ระดับโลกและแคมเปญระดับประเทศ กลุ่มเทคโนโลยีและแบรนด์ชั้นนำ (Samsung, LINE, Philips, Lexus, PTT, STAEDTLER) สถาบันการเงิน (SCB, Krungsri, Krungthai 'ชิมช้อปใช้', เงินติดล้อ) ธุรกิจอาหารและบริการ (The Pizza Company, Burger King, Nok Air) หน่วยงานภาครัฐ (GPO, กกต., depa, PEA (กฟภ.)) ไปจนถึงงานสื่อจัดแสดงในพิพิธภัณฑ์ จนก้าวสู่บทบาท AI Content Director ที่ผสานศาสตร์การเล่าเรื่อง (Storytelling) เข้ากับ Generative AI เพื่อยกระดับและควบคุมงานโปรดักชันสเกลใหญ่แบบครบวงจร (End-to-End)",
+  "en": "Created works for global brands and national campaigns across various sectors: technology and leading brands (Samsung, LINE, Philips, Lexus, PTT, STAEDTLER), financial institutions (SCB, Krungsri, Krungthai 'Chim-Shop-Chai', Ngern Tid Lor), food and service industries (The Pizza Company, Burger King, Nok Air), government agencies (GPO, ECT, depa, PEA), and museum exhibition media. This journey has led me to the role of an AI Content Director, blending the art of storytelling with Generative AI to elevate and oversee large-scale, end-to-end productions."    },
     "tech": {
-      "th": "นอกเหนือจากงาน Motion ยังสร้างระบบและ Automation จริงๆ มาตลอด ตั้งแต่ระบบ Full-stack สำหรับแคมเปญระดับประเทศอย่าง STAEDTLER ไปจนถึงแพลตฟอร์ม AI (MoonRacle) เน้นออกแบบ Workflow ที่ใช้ได้จริง ขยายตัวได้ และแก้ปัญหาซับซ้อนได้โดยไม่ต้องพึ่งทีมใหญ่",
-      "en": "Systems developer focused on building intelligent architectures and high-impact automation. From full-stack systems for national campaigns (STAEDTLER) to advanced AI platforms (MoonRacle) — specializing in secure, robust, and scalable workflows that transform business complexity into efficient, code-driven automation."
+      "th": "นอกเหนือจากงาน Motion ผมยังเป็นผู้ออกแบบระบบและ Automation แบบ Full-stack มาอย่างต่อเนื่อง ครอบคลุมตั้งแต่การทำระบบแคมเปญระดับประเทศ (STAEDTLER) ไปจนถึงการวางสถาปัตยกรรม AI Agent และระบบ Microservices ให้แพลตฟอร์มสเกลใหญ่อย่าง MoonRacle ตลอดจนการสร้าง Pipeline สำหรับผลิตสื่อ AI และ AR Interactive Tiktok ด้วย Effect House",
+      "en": "Beyond motion design, I am a full-stack system and automation architect. My work spans from building national campaign systems (STAEDTLER) and designing microservices with AI Agent architectures for large-scale platforms like MoonRacle, to engineering AI media production pipelines and creating AR interactive experiences on TikTok using Effect House."
     }
   },
   "sourceUrl": "https://tripoomsinghaart.framer.website/",

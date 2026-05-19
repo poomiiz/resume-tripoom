@@ -230,8 +230,21 @@ export default function PortfolioView() {
       <header className="relative mx-auto max-w-6xl px-5 pt-4 md:pt-8">
         <div className="portfolio-hero relative overflow-hidden rounded-[1.75rem] md:rounded-[2rem] bg-[#0a0a0a]">
           <div className="absolute inset-0">
-            <Image src={images.heroBackground} alt="" fill priority className="object-cover" sizes="1152px" />
-            <Image src={images.heroOverlay} alt="" fill className="object-cover mix-blend-soft-light opacity-70" sizes="1152px" />
+            <Image
+              src={images.heroBackground}
+              alt=""
+              fill
+              priority
+              className="object-cover brightness-[0.68] saturate-[0.92]"
+              sizes="1152px"
+            />
+            <Image
+              src={images.heroOverlay}
+              alt=""
+              fill
+              className="object-cover mix-blend-soft-light opacity-50"
+              sizes="1152px"
+            />
             <div className="portfolio-hero-gradient absolute inset-0" />
           </div>
 
@@ -245,28 +258,37 @@ export default function PortfolioView() {
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 className="max-w-2xl portfolio-hero-copy text-left"
               >
-                <p className="portfolio-label text-[color:var(--pf-accent)] mb-6 flex items-center gap-3 text-wrap text-left">
-                  <span className="w-8 h-px bg-[color:var(--pf-accent)]/50 shrink-0" />
-                  <span aria-hidden className="text-base leading-none drop-shadow-[0_0_10px_var(--pf-accent)]">
-                    {mode === "creative" ? "🎬" : "🤖"}
-                  </span>
-                  {mode === "creative" ? profile.mainRole.creative[locale] : profile.mainRole.tech[locale]}
-                </p>
-                
                 <LocaleStack
                   text={profile.name}
                   locale={locale}
                   as="h1"
-                  className="portfolio-hero-name font-brand font-semibold leading-[1.08] text-white drop-shadow-2xl mb-3 text-left tracking-tight"
+                  className="portfolio-hero-name font-brand font-semibold leading-[1.08] text-white drop-shadow-2xl mb-2 text-left tracking-tight"
                 />
 
+                <div className="portfolio-hero-role-row mb-5 flex flex-nowrap items-start gap-2.5 text-left md:gap-3">
+                  <span
+                    aria-hidden
+                    className="portfolio-hero-role-emoji mt-[0.2em] shrink-0 select-none text-[1.35rem] leading-none md:text-[1.65rem]"
+                  >
+                    {mode === "creative" ? "🎬" : "🤖"}
+                  </span>
+                  <div className="min-w-0 max-w-2xl flex-1 basis-0">
+                    <LocaleStack
+                      text={mode === "creative" ? profile.mainRole.creative : profile.mainRole.tech}
+                      locale={locale}
+                      as="p"
+                      className="portfolio-hero-role text-left font-semibold leading-snug text-[color:var(--pf-accent)]"
+                    />
+                  </div>
+                </div>
+
                 {profile.position && (
-                  <p className="text-sm md:text-base font-semibold uppercase tracking-[0.18em] text-white/50 text-left mb-5">
+                  <p className="mb-5 text-left text-sm font-semibold uppercase tracking-[0.18em] text-white/55 md:text-base">
                     {profile.position[locale] ?? profile.position.en}
                   </p>
                 )}
 
-                <p className="text-lg md:text-xl text-white/90 font-medium text-left max-w-2xl leading-snug tracking-normal">
+                <p className="mb-0 max-w-2xl text-left text-lg font-medium leading-snug tracking-normal text-white/90 md:text-xl">
                   {mode === "creative" ? profile.tagline.creative[locale] : profile.tagline.tech[locale]}
                 </p>
 
