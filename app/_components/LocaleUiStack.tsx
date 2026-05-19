@@ -26,7 +26,7 @@ export function LocaleUiStack({
   path: string;
   locale: PortfolioLocale;
   className?: string;
-  as?: "span" | "p" | "h2";
+  as?: "span" | "p" | "h2" | "h3";
 }) {
   const text = getPath(UI.th, path);
   return (
