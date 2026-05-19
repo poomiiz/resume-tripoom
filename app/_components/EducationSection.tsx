@@ -6,7 +6,7 @@ import { LocaleStack } from "./LocaleStack";
 
 export function EducationSection({ data, locale }: { data: EducationRecord; locale: PortfolioLocale }) {
   return (
-    <article className="mt-2 max-w-3xl rounded-2xl border border-black/[0.07] dark:border-white/[0.08] bg-white/40 dark:bg-white/[0.03] px-6 py-7 md:px-8 md:py-8 text-left shadow-sm backdrop-blur-md">
+    <article className="portfolio-edu-card portfolio-panel mt-2 max-w-3xl rounded-2xl px-6 py-7 md:px-8 md:py-8 text-left">
       <LocaleStack
         text={data.degreeLine}
         locale={locale}

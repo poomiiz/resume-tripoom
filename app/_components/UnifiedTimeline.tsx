@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 import Image from "next/image";
 
@@ -73,7 +74,7 @@ function UnifiedMotionGroup({
   const showNina = isNinaCard && ninaReels && ninaReels.length > 0;
 
   return (
-    <article className="portfolio-panel portfolio-job-card text-left w-full">
+    <article className="portfolio-panel portfolio-job-card portfolio-journey-motion-card text-left w-full">
       <LocaleStack text={group.job.period} locale={locale} as="p" className="portfolio-job-card__period" />
       <LocaleStack
         text={group.job.company}
@@ -196,24 +197,18 @@ function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: Portfo
               {entry.status[locale]}
             </span>
           )}
-          {entry.url && (
-            <a
-              href={entry.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[0.7rem] font-semibold text-[color:var(--pf-accent)] hover:underline flex items-center gap-1 transition-opacity hover:opacity-80"
-            >
-              <span aria-hidden>↗</span>
-              {locale === "th" ? "เปิดลิงก์" : "View"}
-            </a>
-          )}
         </div>
       </div>
 
-      {/* Stack */}
-      <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3 items-center text-left">
-        <p className="portfolio-label text-black/65 dark:text-white/62 text-left">{techUi(locale, "stack")}</p>
-        <LocaleStack text={entry.stack} locale={locale} as="p" className="portfolio-text-subtitle text-left" />
+      {/* Stack — สีจาก CSS variables ธีม (ไม่พึ่ง dark: อย่างเดียว) เพื่อให้อ่านชัดใน dark + tech */}
+      <div className="tech-task-stack-row mt-4 flex flex-wrap gap-x-8 gap-y-3 items-center text-left">
+        <p className="portfolio-label tech-task-stack-row__label text-left">{techUi(locale, "stack")}</p>
+        <LocaleStack
+          text={entry.stack}
+          locale={locale}
+          as="p"
+          className="portfolio-text-subtitle tech-task-stack-row__value text-left"
+        />
       </div>
 
       {/* Outcomes */}
@@ -232,14 +227,39 @@ function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: Portfo
           imageUrl={entry.imageUrl}
           alt={entry.project[locale]}
           url={entry.url}
+          locale={locale}
         />
       )}
     </article>
   );
 }
 
-function TechImageBlock({ imageUrl, alt, url }: { imageUrl: string; alt: string; url?: string }) {
+function TechImageBlock({
+  imageUrl,
+  alt,
+  url,
+  locale,
+}: {
+  imageUrl: string;
+  alt: string;
+  url?: string;
+  locale: PortfolioLocale;
+}) {
   const [lightbox, setLightbox] = useState(false);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [lightbox]);
 
   return (
     <>
@@ -259,8 +279,8 @@ function TechImageBlock({ imageUrl, alt, url }: { imageUrl: string; alt: string;
           <button
             type="button"
             onClick={() => setLightbox(true)}
-            className="block w-full group focus:outline-none"
-            aria-label="ขยายรูป"
+            className="group relative block w-full cursor-zoom-in focus:outline-none"
+            aria-label={locale === "th" ? "ขยายรูปเต็มจอ" : "Open full screen image"}
           >
             <Image
               src={imageUrl}
@@ -270,37 +290,48 @@ function TechImageBlock({ imageUrl, alt, url }: { imageUrl: string; alt: string;
               unoptimized
               className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
             />
-            <span className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 text-white text-xs px-2 py-1 rounded-lg backdrop-blur-sm">
-              ⤢ ขยาย
-            </span>
           </button>
         )}
       </div>
 
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
-          onClick={() => setLightbox(false)}
-        >
-          <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
-            <button
-              type="button"
-              onClick={() => setLightbox(false)}
-              className="absolute -top-10 right-0 text-white/70 hover:text-white text-sm font-semibold flex items-center gap-1.5"
-            >
-              <span aria-hidden>✕</span> Close
-            </button>
-            <Image
-              src={imageUrl}
-              alt={alt}
-              width={1600}
-              height={900}
-              unoptimized
-              className="w-full h-auto rounded-2xl shadow-2xl"
-            />
-          </div>
-        </div>
-      )}
+      {lightbox &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[10050] flex flex-col bg-black/92 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-label={locale === "th" ? "ดูรูปเต็มจอ" : "Full screen image"}
+            onClick={() => setLightbox(false)}
+          >
+            <div className="flex shrink-0 justify-end p-3 sm:p-4" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                onClick={() => setLightbox(false)}
+                className="rounded-full bg-white/10 px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/20"
+              >
+                <span aria-hidden>✕</span> {locale === "th" ? "ปิด" : "Close"}
+              </button>
+            </div>
+            <div className="flex min-h-0 flex-1 items-center justify-center px-2 pb-4 sm:px-4 sm:pb-6">
+              <div
+                className="inline-flex max-h-[calc(100dvh-7rem)] max-w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Image
+                  src={imageUrl}
+                  alt={alt}
+                  width={1600}
+                  height={900}
+                  unoptimized
+                  className="max-h-[calc(100dvh-7rem)] max-w-full h-auto w-auto object-contain"
+                  sizes="100vw"
+                  priority
+                />
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 }

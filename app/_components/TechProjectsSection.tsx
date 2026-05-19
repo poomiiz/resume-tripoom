@@ -47,9 +47,16 @@ export function TechProjectsList({ locale }: { locale: PortfolioLocale }) {
               <LocaleStack text={entry.project} locale={locale} as="h3" className="mt-2 text-xl md:text-2xl font-bold leading-tight" />
 
               <div className="mt-6">
-                <p className="text-[0.75rem] font-bold uppercase tracking-[0.12em] opacity-55">{techUi(locale, "stack")}</p>
+                <p className="portfolio-label tech-task-stack-row__label text-[0.75rem] tracking-[0.12em]">
+                  {techUi(locale, "stack")}
+                </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
-                  <LocaleStack text={entry.stack} locale={locale} as="p" className="text-[0.9375rem] opacity-80" />
+                  <LocaleStack
+                    text={entry.stack}
+                    locale={locale}
+                    as="p"
+                    className="text-[0.9375rem] tech-task-stack-row__value leading-relaxed"
+                  />
                 </div>
               </div>
             </div>

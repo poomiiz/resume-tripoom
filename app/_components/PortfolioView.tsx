@@ -235,14 +235,14 @@ export default function PortfolioView() {
               alt=""
               fill
               priority
-              className="object-cover brightness-[0.68] saturate-[0.92]"
+              className="object-cover brightness-[0.62] contrast-[1.04] saturate-[0.94]"
               sizes="1152px"
             />
             <Image
               src={images.heroOverlay}
               alt=""
               fill
-              className="object-cover mix-blend-soft-light opacity-50"
+              className="object-cover mix-blend-soft-light opacity-[0.44]"
               sizes="1152px"
             />
             <div className="portfolio-hero-gradient absolute inset-0" />
