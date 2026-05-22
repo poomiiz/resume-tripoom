@@ -228,19 +228,12 @@ export function getPortfolioImages() {
 }
 export function getProfile() { return PROFILE; }
 export function getSkillSections(): import("./portfolio.data").SkillSection[] {
-  return Object.entries(SKILL_SECTIONS_V2).map(([id, section]) => {
-    if (id === "interests" && section && "items" in section && Array.isArray(section.items)) {
-      const unified = section as { title: LocalizedText; items: LocalizedText[] };
-      return {
-        id,
-        title: { creative: unified.title, tech: unified.title },
-        items: { creative: unified.items, tech: unified.items },
-      };
-    }
+  return Object.entries(SKILL_SECTIONS_V2).map(([id, section]: [string, any]) => {
+    // New unified bilingual structure
     return {
       id,
-      title: section.title as SkillSection["title"],
-      items: section.items as SkillSection["items"],
+      title: { creative: section.title, tech: section.title },
+      items: { creative: section.items, tech: section.items },
     };
   });
 }
