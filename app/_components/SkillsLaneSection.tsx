@@ -52,9 +52,7 @@ function ToolsCard({
 }
 
 export function SkillsLaneSection({
-  sections,
   locale,
-  displayMode = "creative",
   theme,
 }: {
   sections: SkillSection[];
@@ -62,88 +60,31 @@ export function SkillsLaneSection({
   displayMode?: PortfolioMode;
   theme?: "light" | "dark";
 }) {
-  const reduceMotion = useReducedMotion();
   return (
     <div className="mt-4 space-y-10">
-      <motion.div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`soft-${displayMode}`}
-            initial={{ opacity: 0, x: displayMode === "creative" ? -10 : 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: displayMode === "creative" ? 10 : -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            <SkillsShowcase locale={locale} displayMode={displayMode} personalOnly />
-          </motion.div>
-        </AnimatePresence>
-
-        <SkillsShowcase locale={locale} displayMode={displayMode} interestsOnly />
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`craft-${displayMode}`}
-            initial={{ opacity: 0, x: displayMode === "creative" ? -10 : 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: displayMode === "creative" ? 10 : -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            <SkillsShowcase locale={locale} displayMode={displayMode} craftOnly />
-          </motion.div>
-        </AnimatePresence>
-      </motion.div>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <SkillsShowcase locale={locale} personalOnly />
+        <SkillsShowcase locale={locale} interestsOnly />
+        <SkillsShowcase locale={locale} craftOnly />
+      </div>
 
       <div className="pt-6 border-t border-black/[0.05] dark:border-white/5">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={displayMode === "creative" ? "tools-lane-creative" : "tools-lane-tech"}
-            initial={
-              reduceMotion
-                ? { opacity: 0 }
-                : { opacity: 0, y: 16, scale: 0.985 }
-            }
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={
-              reduceMotion
-                ? { opacity: 0 }
-                : { opacity: 0, y: -12, scale: 0.99 }
-            }
-            transition={{
-              duration: reduceMotion ? 0.14 : 0.34,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="space-y-5"
-            aria-live="polite"
-          >
-            <LocaleUiStack
-              path={displayMode === "creative" ? "sections.toolsMotion" : "sections.toolsTech"}
-              locale={locale}
-              as="h2"
-              className="text-base md:text-lg font-bold block text-black dark:text-white"
-            />
-
-            {displayMode === "creative" ? (
-              <ToolsCard
-                emoji="🎬"
-                titlePath="nav.motion"
-                subtitle="Motion Craft · VFX · Creative Tools"
-                locale={locale}
-                lane="creative"
-                theme={theme}
-              />
-            ) : (
-              <ToolsCard
-                emoji="💻"
-                titlePath="nav.tech"
-                subtitle="AI · Dev · Design · Ops"
-                locale={locale}
-                lane="tech"
-                showGroups
-                theme={theme}
-              />
-            )}
-          </motion.div>
-        </AnimatePresence>
+        <article className="portfolio-skill-section portfolio-panel rounded-[1.75rem] p-6 md:p-8">
+          <header className="flex items-center gap-3 mb-8">
+            <span
+              aria-hidden
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-black/[0.08] dark:border-white/10 bg-white/70 dark:bg-white/[0.04] text-xl shadow-sm backdrop-blur-md"
+            >
+              🛠️
+            </span>
+            <div className="flex flex-col leading-tight">
+              <h3 className="text-[0.875rem] font-bold uppercase tracking-[0.18em] text-black/80 dark:text-white/80">
+                Production Tools
+              </h3>
+            </div>
+          </header>
+          <WorkToolsIconGrid locale={locale} theme={theme} />
+        </article>
       </div>
     </div>
   );

@@ -18,19 +18,6 @@ import { ExternalReelCard } from "./ExternalReelCard";
 import { NinaReelCard } from "./ExtraMotionReels";
 import type { PortfolioMode } from "../_lib/portfolioMode";
 
-function phaseChipTitle(phase: UnifiedTimelinePhase, displayMode: PortfolioMode): LocalizedText {
-  if (displayMode === "creative" && phase.arc.id === "advanced-systems") {
-    return PROFILE.mainRole.creative;
-  }
-  if (displayMode === "creative" && phase.arc.id === "foundation") {
-    return {
-      th: "Motion Graphic Designer & VFX Artist",
-      en: "Motion Graphic Designer & VFX Artist",
-    };
-  }
-  return phase.arc.title;
-}
-
 function isFacebookReel(href: string): boolean {
   return /facebook\.com\/reel\//i.test(href);
 }
@@ -64,18 +51,25 @@ function UnifiedMotionGroup({
   group,
   locale,
   ninaReels,
+  extraReels,
 }: {
   group: MotionGroup;
   locale: PortfolioLocale;
   ninaReels?: ExtraMotionReel[];
+  extraReels?: ExtraMotionReel[];
 }) {
   const reels = group.reels;
   const isNinaCard = group.job.key === "aiContent";
   const showNina = isNinaCard && ninaReels && ninaReels.length > 0;
+  
+  const isGoExtraCard = group.job.key === "goExtra";
+  const showExtra = isGoExtraCard && extraReels && extraReels.length > 0;
 
   return (
     <article className="portfolio-panel portfolio-job-card portfolio-journey-motion-card text-left w-full">
-      <LocaleStack text={group.job.period} locale={locale} as="p" className="portfolio-job-card__period" />
+      <div className="flex justify-between items-start mb-2">
+        <LocaleStack text={group.job.period} locale={locale} as="p" className="portfolio-job-card__period" />
+      </div>
       <LocaleStack
         text={group.job.company}
         locale={locale}
@@ -88,7 +82,7 @@ function UnifiedMotionGroup({
         <ul className="portfolio-job-card__list">
           {group.job.highlights.map((h) => (
             <li key={h.th} className="portfolio-job-card__list-item">
-              <span className="portfolio-job-card__bullet" aria-hidden />
+              <span className="portfolio-job-card__bullet shadow-[0_0_12px_var(--pf-accent)] bg-[color:var(--pf-accent)]" aria-hidden />
               <LocaleStack text={h} locale={locale} as="span" className="portfolio-job-card__list-text" />
             </li>
           ))}
@@ -104,6 +98,27 @@ function UnifiedMotionGroup({
           <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-1.5 sm:gap-2">
             {ninaReels!.map((reel) => (
               <NinaReelCard key={reel.id} reel={reel} size="small" />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Extra Reels for Go The Extra Mile */}
+      {showExtra && (
+        <div className="mt-5 pt-4 border-t border-black/[0.06] dark:border-white/[0.06]">
+          <p className="portfolio-label text-[color:var(--pf-accent)] mb-3 text-xs">
+            {locale === 'th' ? 'วิดีโอเพิ่มเติม' : 'More Videos'}
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {extraReels!.map((reel) => (
+              <ExternalReelCard
+                key={reel.id}
+                href={reel.href}
+                thumb={reel.thumb || ""}
+                label={reel.label}
+                locale={locale}
+                platform="youtube"
+              />
             ))}
           </div>
         </div>
@@ -128,6 +143,7 @@ function UnifiedMotionGroup({
     </article>
   );
 }
+
 
 function TechExpertiseStrip({ locale }: { locale: PortfolioLocale }) {
   return (
@@ -200,22 +216,11 @@ function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: Portfo
         </div>
       </div>
 
-      {/* Stack — สีจาก CSS variables ธีม (ไม่พึ่ง dark: อย่างเดียว) เพื่อให้อ่านชัดใน dark + tech */}
-      <div className="tech-task-stack-row mt-4 flex flex-wrap gap-x-8 gap-y-3 items-center text-left">
-        <p className="portfolio-label tech-task-stack-row__label text-left">{techUi(locale, "stack")}</p>
-        <LocaleStack
-          text={entry.stack}
-          locale={locale}
-          as="p"
-          className="portfolio-text-subtitle tech-task-stack-row__value text-left"
-        />
-      </div>
-
-      {/* Outcomes */}
+      {/* Outcomes — Glowy Bullets */}
       <ul className="mt-6 space-y-4 text-left">
         {entry.outcomes.map((o, i) => (
           <li key={i} className="portfolio-highlight-item flex gap-5 text-left">
-            <span className="text-[color:var(--pf-accent)] mt-2.5 h-1.5 w-1.5 rounded-full shrink-0" />
+            <span className="text-[color:var(--pf-accent)] mt-2.5 h-1.5 w-1.5 rounded-full shrink-0 shadow-[0_0_12px_var(--pf-accent)] bg-[color:var(--pf-accent)]" />
             <LocaleStack text={o} locale={locale} className="portfolio-text-body flex-1" />
           </li>
         ))}
@@ -340,123 +345,104 @@ export function UnifiedTimeline({
   journey,
   locale,
   displayMode = "creative",
-  ninaReels,
+  extraMotionReels,
 }: {
   journey: UnifiedTimelinePhase[];
   locale: PortfolioLocale;
   displayMode?: PortfolioMode;
-  ninaReels?: ExtraMotionReel[];
+  extraMotionReels?: ExtraMotionReel[];
 }) {
-  const groupTechByYear = (projects: TechExperience[]) => {
-    const years: Record<string, TechExperience[]> = {};
-    projects.forEach((p) => {
-      const year = p.period.en.split(" ")[0];
-      if (!years[year]) years[year] = [];
-      years[year].push(p);
-    });
-    return Object.entries(years).sort((a, b) => b[0].localeCompare(a[0]));
-  };
-
   const trackClass = "portfolio-journey-track";
 
-  const orderedPhases = useMemo(() => {
-    const raw = displayMode === "creative" ? [...journey].reverse() : journey;
-    return raw.filter((phase) => {
-      if (displayMode === "creative" && phase.motionGroups.length === 0) return false;
-      if (displayMode === "tech" && phase.arc.id === "foundation" && phase.techProjects.length === 0)
-        return false;
-      return true;
+  const ninaReels = useMemo(() => extraMotionReels?.filter((r) => r.id.startsWith("nina-")), [extraMotionReels]);
+  const otherExtraReels = useMemo(() => extraMotionReels?.filter((r) => !r.id.startsWith("nina-")), [extraMotionReels]);
+
+  const unifiedList = useMemo(() => {
+    type UnifiedItem = 
+      | { type: 'tech'; entry: TechExperience; year: number; order: number }
+      | { type: 'motion'; group: MotionGroup; year: number; order: number };
+
+    const items: UnifiedItem[] = [];
+
+    // Map to keep track of sorting and original user list order
+    const USER_ORDER: Record<string, number> = {
+      "staedtler-voucher-2026": 1,
+      "moonracle-2026": 2,
+      "ai-music-pipeline-2026": 3,
+      "aiContent": 4,
+      "tiktok-ar-2024": 5,
+      "goExtra": 6,
+      "clickMotion": 7,
+      "shortgun": 8,
+    };
+
+    journey.forEach(phase => {
+      phase.techProjects.forEach(p => {
+        items.push({ 
+          type: 'tech', 
+          entry: p, 
+          year: parseInt(p.period.en) || 2026,
+          order: USER_ORDER[p.id] || 99 
+        });
+      });
+      phase.motionGroups.forEach(g => {
+        items.push({ 
+          type: 'motion', 
+          group: g, 
+          year: parseInt(g.job.period.en) || 2024,
+          order: USER_ORDER[g.job.key] || 99
+        });
+      });
     });
-  }, [journey, displayMode]);
+
+    return items.sort((a, b) => a.order - b.order);
+  }, [journey]);
 
   return (
     <div className="portfolio-unified-timeline relative mx-auto max-w-5xl px-4 md:px-6">
       <div className="space-y-16 md:space-y-20">
-        {orderedPhases.map((phase, phaseIdx) => (
-            <div key={phase.arc.id} className="relative">
-              <div className="mb-10 flex flex-col items-start gap-2 md:mb-12 md:items-center md:text-center">
+            <div className="relative">
+              <div className="mb-4 flex flex-col items-start md:items-center md:text-center">
                 <div className="portfolio-glass-chip relative z-20 inline-flex max-w-full rounded-full px-7 py-3.5 text-black dark:text-white md:px-10 md:py-4">
-                  <LocaleStack
-                    text={phaseChipTitle(phase, displayMode)}
-                    locale={locale}
-                    as="h3"
-                    className="portfolio-phase-chip-title text-center text-black dark:text-white text-wrap"
-                  />
+                  <h3 className="portfolio-phase-chip-title text-center text-black dark:text-white text-wrap">
+                    {locale === 'th' ? 'ผลงาน & ประสบการณ์' : 'Experience & Projects'}
+                  </h3>
                 </div>
-                {phaseIdx === 0 && (
-                  <p className="portfolio-journey-craft-line-under-chip flex flex-wrap items-center justify-start gap-1.5 text-[color:var(--pf-accent)] opacity-95 md:justify-center">
-                    <span aria-hidden>{displayMode === "creative" ? "🎨" : "🔗"}</span>
-                    <span>
-                      {displayMode === "creative" ? "Motion & VFX Craft" : "Systems & Architecture"}
-                    </span>
-                  </p>
-                )}
               </div>
 
-              <div className="mb-8 md:mb-10 text-left">
-                <article className="portfolio-glass-strong portfolio-phase-narrative relative mx-auto text-left max-w-2xl">
-                  <LocaleStack
-                    text={phase.arc.body}
-                    locale={locale}
-                    as="p"
-                    className="portfolio-phase-narrative__body text-left"
-                  />
-                </article>
-              </div>
-
-              {displayMode === "tech" && phase.arc.id === "advanced-systems" && (
-                <div className="mb-10">
-                  <TechExpertiseStrip locale={locale} />
-                </div>
-              )}
-
-              <div className="space-y-12 md:space-y-16">
-                {displayMode === "tech" && phase.techProjects.length > 0 && (
-                  <div className={trackClass}>
-                    {groupTechByYear(phase.techProjects)
-                      .flatMap(([year, projs]) => projs.map((entry) => ({ year, entry })))
-                      .map(({ year, entry }, idx, arr) => {
-                        const align =
-                          idx === arr.length - 1 ? "right" : idx % 2 === 0 ? "left" : "right";
-                        return (
-                          <article
-                            key={entry.id}
-                            className={`portfolio-journey-item portfolio-journey-item--tech portfolio-journey-item--align-${align}`}
-                          >
-                            <span className="portfolio-journey-node" aria-hidden />
-                            <div className="portfolio-panel portfolio-tech-project-card text-left">
-                              <p className="portfolio-job-card__period">{year}</p>
-                              <TechTaskItem entry={entry} locale={locale} />
-                            </div>
-                          </article>
-                        );
-                      })}
-                  </div>
-                )}
-
-                {displayMode === "creative" && phase.motionGroups.length > 0 && (
-                  <div className={trackClass}>
-                    {phase.motionGroups.map((group) => (
-                      <article
-                        key={group.job.key}
-                        className={`portfolio-journey-item${
-                          group.job.key === "aiContent" ? " portfolio-journey-item--end" : ""
-                        }`}
-                      >
-                        <span className="portfolio-journey-node" aria-hidden />
+              <div className={`${trackClass} !pt-0`}>
+                {unifiedList.map((item, idx) => {
+                  const align = idx % 2 === 0 ? "left" : "right";
+                  const key = item.type === 'tech' ? item.entry.id : item.group.job.key;
+                  
+                  return (
+                    <article
+                      key={key}
+                      className={`portfolio-journey-item portfolio-journey-item--align-${align} ${
+                        item.type === 'motion' && item.group.job.key === 'aiContent' ? 'portfolio-journey-item--end' : ''
+                      }`}
+                    >
+                      <span className="portfolio-journey-node shadow-[0_0_15px_var(--pf-accent)]" aria-hidden />
+                      {item.type === 'tech' ? (
+                        <div className="portfolio-panel portfolio-tech-project-card text-left">
+                          <p className="portfolio-job-card__period">{item.entry.period[locale]}</p>
+                          <TechTaskItem entry={item.entry} locale={locale} />
+                        </div>
+                      ) : (
                         <UnifiedMotionGroup
-                          group={group}
+                          group={item.group}
                           locale={locale}
-                          ninaReels={group.job.key === "aiContent" ? ninaReels : undefined}
+                          ninaReels={item.group.job.key === "aiContent" ? ninaReels : undefined}
+                          extraReels={item.group.job.key === "goExtra" ? otherExtraReels : undefined}
                         />
-                      </article>
-                    ))}
-                  </div>
-                )}
+                      )}
+                    </article>
+                  );
+                })}
               </div>
             </div>
-        ))}
       </div>
     </div>
   );
 }
+

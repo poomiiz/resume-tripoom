@@ -91,33 +91,29 @@ function SkillSectionCard({
   );
 }
 
-export function SkillsShowcase({ locale, displayMode, personalOnly, interestsOnly, craftOnly }: Props) {
-  const data = SKILL_SECTIONS_V2;
+export function SkillsShowcase({ locale, personalOnly, interestsOnly, craftOnly }: Omit<Props, 'displayMode'>) {
+  const data = SKILL_SECTIONS_V2 as any;
 
   if (personalOnly) {
     return (
-      <SkillSectionCard title={data.soft.title[displayMode]} id="soft" locale={locale}>
-        <UnifiedNumberedList items={data.soft.items[displayMode]} locale={locale} />
+      <SkillSectionCard title={data.soft.title} id="soft" locale={locale}>
+        <UnifiedNumberedList items={data.soft.items} locale={locale} />
       </SkillSectionCard>
     );
   }
 
   if (interestsOnly) {
-    const interests = data.interests as {
-      title: { th: string; en: string };
-      items: { th: string; en: string }[];
-    };
     return (
-      <SkillSectionCard title={interests.title} id="interests" locale={locale}>
-        <UnifiedNumberedList items={interests.items} locale={locale} />
+      <SkillSectionCard title={data.interests.title} id="interests" locale={locale}>
+        <UnifiedNumberedList items={data.interests.items} locale={locale} />
       </SkillSectionCard>
     );
   }
 
   if (craftOnly) {
     return (
-      <SkillSectionCard title={data.craft.title[displayMode]} id="craft" locale={locale}>
-        <UnifiedNumberedList items={data.craft.items[displayMode]} locale={locale} />
+      <SkillSectionCard title={data.valueProp.title} id="craft" locale={locale}>
+        <UnifiedNumberedList items={data.valueProp.items} locale={locale} />
       </SkillSectionCard>
     );
   }

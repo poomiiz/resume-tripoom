@@ -11,6 +11,7 @@ import type { PortfolioLocale } from "../_lib/portfolio.ui";
 import { FlagIcon } from "./FlagIcon";
 import { SkillsLaneSection } from "./SkillsLaneSection";
 import { UnifiedTimeline } from "./UnifiedTimeline";
+import { WorkToolsIconGrid } from "./WorkToolsIconGrid";
 import { ExtraMotionReels } from "./ExtraMotionReels";
 import { ProfileToggle } from "./ProfileToggle";
 import type { PortfolioMode } from "../_lib/portfolioMode";
@@ -178,25 +179,21 @@ export default function PortfolioView() {
             <a
               href="#top"
               aria-label="Home"
-              className="portfolio-brand-logo group hidden md:flex items-center gap-2.5 shrink-0"
+              className="portfolio-brand-logo group flex items-center gap-2.5 shrink-0"
             >
               <span
                 aria-hidden
                 className="relative grid h-9 w-9 place-items-center rounded-xl border border-black/[0.08] dark:border-white/10 bg-white/70 dark:bg-white/[0.04] text-base backdrop-blur-xl shadow-md transition-all group-hover:scale-105 group-hover:border-[color:var(--pf-accent)]/50"
                 style={{ boxShadow: "0 4px 18px -6px var(--pf-accent)" }}
               >
-                <span className="transition-opacity duration-300" key={mode}>
-                  {mode === "creative" ? "🎬" : "🤖"}
-                </span>
-                <span className="absolute -bottom-0.5 -right-0.5 text-[0.55rem] leading-none">
-                  {mode === "creative" ? "✨" : "⚙️"}
+                <span className="transition-opacity duration-300">
+                  ✨
                 </span>
               </span>
               <span className="font-brand text-xs sm:text-sm font-bold tracking-[0.15em] text-black dark:text-white opacity-80 group-hover:opacity-100 transition-opacity">
                 {profile.name[locale]}
               </span>
             </a>
-            <ProfileToggle mode={mode} setMode={setMode} locale={locale} />
           </div>
           
           <div className="flex items-center gap-3 shrink-0">
@@ -249,63 +246,50 @@ export default function PortfolioView() {
           </div>
 
           <div className="relative z-10 grid gap-10 p-8 md:p-16 lg:p-20 md:grid-cols-[1.4fr_0.6fr] md:items-start">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={mode}
-                initial={{ opacity: 0, x: mode === "creative" ? -20 : 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: mode === "creative" ? 20 : -20 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="max-w-2xl portfolio-hero-copy text-left"
-              >
-                <LocaleStack
-                  text={profile.name}
-                  locale={locale}
-                  as="h1"
-                  className="portfolio-hero-name font-brand font-semibold leading-[1.08] text-white drop-shadow-2xl mb-2 text-left tracking-tight"
-                />
+            <div
+              className="max-w-2xl portfolio-hero-copy text-left"
+            >
+              <LocaleStack
+                text={profile.name}
+                locale={locale}
+                as="h1"
+                className="portfolio-hero-name font-brand font-semibold leading-[1.08] text-white drop-shadow-2xl mb-2 text-left tracking-tight"
+              />
 
-                <div className="portfolio-hero-role-row mb-5 flex flex-nowrap items-start gap-2.5 text-left md:gap-3">
-                  <span
-                    aria-hidden
-                    className="portfolio-hero-role-emoji mt-[0.2em] shrink-0 select-none text-[1.35rem] leading-none md:text-[1.65rem]"
-                  >
-                    {mode === "creative" ? "🎬" : "🤖"}
-                  </span>
-                  <div className="min-w-0 max-w-2xl flex-1 basis-0">
-                    <LocaleStack
-                      text={mode === "creative" ? profile.mainRole.creative : profile.mainRole.tech}
-                      locale={locale}
-                      as="p"
-                      className="portfolio-hero-role text-left font-semibold leading-snug text-[color:var(--pf-accent)]"
-                    />
-                  </div>
+              <div className="portfolio-hero-role-row mb-5 flex flex-nowrap items-start gap-2.5 text-left md:gap-3">
+                <span
+                  aria-hidden
+                  className="portfolio-hero-role-emoji mt-[0.2em] shrink-0 select-none text-[1.35rem] leading-none md:text-[1.65rem]"
+                >
+                  ✨
+                </span>
+                <div className="min-w-0 max-w-2xl flex-1 basis-0">
+                  <LocaleStack
+                    text={profile.mainRole.creative}
+                    locale={locale}
+                    as="p"
+                    className="portfolio-hero-role text-left font-semibold leading-snug text-[color:var(--pf-accent)]"
+                  />
                 </div>
+              </div>
 
-                {profile.position && (
-                  <p className="mb-5 text-left text-sm font-semibold uppercase tracking-[0.18em] text-white/55 md:text-base">
-                    {profile.position[locale] ?? profile.position.en}
-                  </p>
-                )}
+              <p className="mb-0 max-w-2xl text-left text-lg font-medium leading-snug tracking-normal text-white/90 md:text-xl">
+                {profile.tagline.creative[locale]}
+              </p>
 
-                <p className="mb-0 max-w-2xl text-left text-lg font-medium leading-snug tracking-normal text-white/90 md:text-xl">
-                  {mode === "creative" ? profile.tagline.creative[locale] : profile.tagline.tech[locale]}
-                </p>
-
-                <div className="flex items-center gap-3 my-10">
-                  <div className="w-24 h-1.5 bg-[color:var(--pf-accent)] rounded-full shadow-[0_0_15px_var(--pf-accent)] transition-all duration-500" />
-                  <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
-                    <span aria-hidden>{mode === "creative" ? "🎨" : "🧠"}</span>
-                    <span aria-hidden className="opacity-40">·</span>
-                    <span aria-hidden>{mode === "creative" ? "✨" : "⚙️"}</span>
-                  </div>
+              <div className="flex items-center gap-3 my-10">
+                <div className="w-24 h-1.5 bg-[color:var(--pf-accent)] rounded-full shadow-[0_0_15px_var(--pf-accent)] transition-all duration-500" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/60">
+                  <span aria-hidden>🎨</span>
+                  <span aria-hidden className="opacity-40">·</span>
+                  <span aria-hidden>✨</span>
                 </div>
+              </div>
 
-                <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-2xl font-normal text-left">
-                  {mode === "creative" ? profile.subtitle.creative[locale] : profile.subtitle.tech[locale]}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+              <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-2xl font-normal text-left">
+                {profile.subtitle.creative[locale]}
+              </p>
+            </div>
 
             <div
               ref={portraitTilt.ref}
@@ -339,25 +323,19 @@ export default function PortfolioView() {
               journey={unifiedJourney}
               locale={pf.locale}
               displayMode={mode}
-              ninaReels={extraMotionReels.filter((r) => r.id.startsWith("nina-"))}
+              extraMotionReels={extraMotionReels}
             />
-            {mode === "creative" && extraMotionReels.some((r) => !r.id.startsWith("nina-")) && (
-              <ExtraMotionReels reels={extraMotionReels} locale={locale} />
-            )}
           </div>
         </section>
 
         <section id="skills" className="scroll-mt-24 text-left">
-          <SectionLabel path="sections.skills" locale={locale} icon={mode === "creative" ? "✨" : "⚙️"} />
-          <div className="mt-4 flex flex-col md:flex-row md:items-baseline gap-2">
-            <LocaleUiStack path="sections.skills" locale={locale} as="h2" className="portfolio-section-heading block text-black dark:text-white text-left" />
-            <span className="portfolio-label text-[color:var(--pf-accent)] opacity-90 flex items-center gap-1.5">
-              <span aria-hidden>{mode === "creative" ? "🎞️" : "🧠"}</span>
-              {mode === "creative" ? "Tools & Craft Stack" : "Engineering Stack"}
-            </span>
+          <div className="flex flex-col md:flex-row md:items-baseline gap-2">
+            <h2 className="portfolio-section-heading block text-black dark:text-white text-left">
+              Creative Engineering Stack
+            </h2>
           </div>
           <div className="mt-8">
-            <SkillsLaneSection sections={skillSections} locale={pf.locale} displayMode={mode} theme={theme} />
+            <SkillsLaneSection sections={skillSections} locale={pf.locale} theme={theme} />
           </div>
         </section>
 

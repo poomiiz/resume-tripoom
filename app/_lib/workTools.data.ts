@@ -11,3 +11,7 @@ export function toolsForLane(lane: WorkToolLane): WorkTool[] {
     (a, b) => GROUP_ORDER[a.group ?? "tool"] - GROUP_ORDER[b.group ?? "tool"],
   );
 }
+
+export function getAllTools(): WorkTool[] {
+  return [...WORK_TOOLS];
+}

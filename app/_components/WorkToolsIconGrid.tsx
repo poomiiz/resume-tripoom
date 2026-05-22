@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
 import { pickLocale } from "../_lib/portfolio.ui";
 import { workToolIconNeedsDarkInvert, workToolIconUrl } from "../_lib/workTools.icons";
-import { toolsForLane, type WorkTool, type WorkToolLane } from "../_lib/workTools.data";
+import { getAllTools, toolsForLane, type WorkTool, type WorkToolLane } from "../_lib/workTools.data";
 import { usePortfolioTheme } from "./usePortfolioTheme";
 
 function ToolIconCell({
@@ -52,22 +52,22 @@ function ToolIconCell({
           position: "relative",
           aspectRatio: "1 / 1",
           width: "100%",
-          maxWidth: 80,
+          maxWidth: 64,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 16,
+          borderRadius: 14,
           border: "1px solid",
           borderColor: theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)",
           background: theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.80)",
           backdropFilter: "blur(14px) saturate(1.35)",
           WebkitBackdropFilter: "blur(14px) saturate(1.35)",
-          padding: 10,
+          padding: 8,
           transition: "transform .25s, border-color .25s, box-shadow .25s",
           boxShadow:
             theme === "dark"
-              ? "inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.25)"
-              : "inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(20,20,31,0.06)",
+              ? "inset 0 1px 0 rgba(255,255,255,0.1), 0 6px 18px rgba(0,0,0,0.2)"
+              : "inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 18px rgba(20,20,31,0.04)",
         }}
       >
         <span
@@ -76,7 +76,7 @@ function ToolIconCell({
           style={{
             position: "absolute",
             inset: 0,
-            borderRadius: 16,
+            borderRadius: 14,
             opacity: 0,
             background:
               "radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--tool-color) 22%, transparent) 0%, transparent 70%)",
@@ -87,8 +87,8 @@ function ToolIconCell({
           <img
             src={src}
             alt=""
-            width={40}
-            height={40}
+            width={32}
+            height={32}
             loading="lazy"
             decoding="async"
             onError={() => setIconFailed(true)}
@@ -97,8 +97,8 @@ function ToolIconCell({
               zIndex: 1,
               width: "auto",
               height: "auto",
-              maxWidth: "76%",
-              maxHeight: "76%",
+              maxWidth: "74%",
+              maxHeight: "74%",
               objectFit: "contain",
               transition: "transform .4s",
               filter: invertOnDark ? "brightness(0) invert(1)" : undefined,
@@ -111,7 +111,7 @@ function ToolIconCell({
               position: "relative",
               zIndex: 1,
               fontWeight: 700,
-              fontSize: "0.75rem",
+              fontSize: "0.7rem",
               letterSpacing: "-0.02em",
               color: theme === "dark" ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)",
             }}
@@ -128,13 +128,13 @@ function ToolIconCell({
             display: "block",
             width: "100%",
             marginTop: 6,
-            fontSize: "0.75rem",
-            lineHeight: 1.25,
+            fontSize: "0.68rem",
+            lineHeight: 1.2,
             fontWeight: 500,
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
-            color: theme === "dark" ? "rgba(255,255,255,0.55)" : "rgba(0,0,0,0.55)",
+            color: theme === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
           }}
         >
           {label}
@@ -159,9 +159,9 @@ function ToolIconList({
     <ul
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(64px, 1fr))",
-        columnGap: 12,
-        rowGap: 20,
+        gridTemplateColumns: "repeat(auto-fill, minmax(56px, 1fr))",
+        columnGap: 10,
+        rowGap: 16,
         justifyItems: "center",
         listStyle: "none",
         padding: 0,
@@ -191,12 +191,12 @@ function GroupHeading({
   return (
     <p
       style={{
-        margin: "0 0 12px 0",
+        margin: "0 0 16px 0",
         fontSize: "0.75rem",
         fontWeight: 700,
         letterSpacing: "0.14em",
         textTransform: "uppercase",
-        color: theme === "dark" ? "rgba(255,255,255,0.32)" : "rgba(0,0,0,0.32)",
+        color: theme === "dark" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.5)",
       }}
     >
       {children}
@@ -206,7 +206,7 @@ function GroupHeading({
 
 export function WorkToolsIconGrid({
   locale,
-  lane = "tech",
+  lane,
   hideLabels = false,
   showGroups = false,
   theme: themeProp,
@@ -220,25 +220,26 @@ export function WorkToolsIconGrid({
 }) {
   const { theme: hookTheme } = usePortfolioTheme();
   const theme = themeProp ?? hookTheme;
-  const tools = toolsForLane(lane);
+  const tools = lane ? toolsForLane(lane) : getAllTools();
 
   if (showGroups) {
-    const aiTools = tools.filter((t) => t.group === "ai");
-    const devTools = tools.filter((t) => t.group !== "ai");
+    const creativeTools = tools.filter((t) => t.lane === "creative");
+    const techTools = tools.filter((t) => t.lane === "tech");
 
     return (
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 2rem" }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
-          <GroupHeading theme={theme}>AI &amp; Automation</GroupHeading>
-          <ToolIconList tools={aiTools} locale={locale} theme={theme} hideLabels={hideLabels} />
+          <GroupHeading theme={theme}>🎨 Creative Stack</GroupHeading>
+          <ToolIconList tools={creativeTools} locale={locale} theme={theme} hideLabels={hideLabels} />
         </div>
         <div>
-          <GroupHeading theme={theme}>Design, Dev &amp; Ops</GroupHeading>
-          <ToolIconList tools={devTools} locale={locale} theme={theme} hideLabels={hideLabels} />
+          <GroupHeading theme={theme}>⚙️ Tech Stack</GroupHeading>
+          <ToolIconList tools={techTools} locale={locale} theme={theme} hideLabels={hideLabels} />
         </div>
       </div>
     );
   }
 
+  // Unified mode - just the list
   return <ToolIconList tools={tools} locale={locale} theme={theme} hideLabels={hideLabels} />;
 }

@@ -585,19 +585,21 @@ html:has(.portfolio-page) {
 .portfolio-journey-track::before {
   content: "";
   position: absolute;
-  left: 0.42rem;
-  top: 0.5rem;
+  left: 0.825rem;
+  top: -2.25rem;
   bottom: 0.5rem;
   width: 2px;
   border-radius: 2px;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--pf-accent) 85%, transparent) 0%,
-    color-mix(in srgb, var(--pf-border) 70%, transparent) 72%,
+    color-mix(in srgb, var(--pf-accent) 95%, transparent) 0%,
+    color-mix(in srgb, var(--pf-accent) 40%, transparent) 50%,
     transparent 100%
   );
-  opacity: 0.55;
+  box-shadow: 0 0 15px color-mix(in srgb, var(--pf-accent) 30%, transparent);
+  opacity: 0.7;
   pointer-events: none;
+  transform: translateX(-50%);
 }
 
 @media (min-width: 768px) {
@@ -668,18 +670,17 @@ html:has(.portfolio-page) {
   }
 
   .portfolio-journey-item--tech.portfolio-journey-item--align-left .portfolio-journey-node {
-    left: 100%;
-    right: auto;
-    top: 1.25rem;
-    transform: translate(1.35rem, -50%);
-  }
+      left: 100%;
+      right: auto;
+      top: 1.25rem;
+      transform: translate(calc(1.35rem - 50%), -50%);
+    }
 
   .portfolio-journey-item--tech.portfolio-journey-item--align-right .portfolio-journey-node {
-    left: 0;
-    top: 1.25rem;
-    transform: translate(-1.35rem, -50%);
-  }
-
+      left: 0;
+      top: 1.25rem;
+      transform: translate(calc(-1.35rem - 50%), -50%);
+    }
   .portfolio-journey-item--tech.portfolio-journey-item--align-left .portfolio-tech-project-card {
     margin-right: auto;
     margin-left: 0;
@@ -739,16 +740,18 @@ html:has(.portfolio-page) {
 
 .portfolio-journey-node {
   position: absolute;
-  left: -1.28rem;
+  left: -0.825rem;
   top: 1.35rem;
   z-index: 2;
-  width: 0.55rem;
-  height: 0.55rem;
+  width: 0.65rem;
+  height: 0.65rem;
   border-radius: 50%;
   background: var(--pf-accent);
   box-shadow:
     0 0 0 3px var(--pf-bg),
-    0 0 10px color-mix(in srgb, var(--pf-accent) 70%, transparent);
+    0 0 12px var(--pf-accent),
+    0 0 22px color-mix(in srgb, var(--pf-accent) 60%, transparent);
+  transform: translate(-50%, -50%);
 }
 
 @media (min-width: 768px) {
@@ -756,19 +759,19 @@ html:has(.portfolio-page) {
     left: 100%;
     right: auto;
     top: 1.25rem;
-    transform: translate(1.35rem, -50%);
+    transform: translate(calc(1.35rem - 50%), -50%);
   }
 
   .portfolio-journey-item:nth-child(even) .portfolio-journey-node {
     left: 0;
     top: 1.25rem;
-    transform: translate(-1.35rem, -50%);
+    transform: translate(calc(-1.35rem - 50%), -50%);
   }
 
   .portfolio-journey-item.portfolio-journey-item--end .portfolio-journey-node {
     left: 0;
     top: 1.25rem;
-    transform: translate(-1.35rem, -50%);
+    transform: translate(calc(-1.35rem - 50%), -50%);
   }
 }
 
