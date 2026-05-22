@@ -209,9 +209,12 @@ function TechTaskItem({ entry, locale }: { entry: TechExperience; locale: Portfo
         </div>
         <div className="flex items-center gap-2 shrink-0 mt-1">
           {entry.status && (
-            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full border border-[color:var(--pf-accent)]/40 text-[color:var(--pf-accent)] bg-[color:var(--pf-accent)]/10">
-              {entry.status[locale]}
-            </span>
+            <LocaleStack
+              text={entry.status}
+              locale={locale}
+              as="span"
+              className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] px-2 py-0.5 rounded-full border border-[color:var(--pf-accent)]/40 text-[color:var(--pf-accent)] bg-[color:var(--pf-accent)]/10"
+            />
           )}
         </div>
       </div>
@@ -405,7 +408,7 @@ export function UnifiedTimeline({
               <div className="mb-4 flex flex-col items-start md:items-center md:text-center">
                 <div className="portfolio-glass-chip relative z-20 inline-flex max-w-full rounded-full px-7 py-3.5 text-black dark:text-white md:px-10 md:py-4">
                   <h3 className="portfolio-phase-chip-title text-center text-black dark:text-white text-wrap">
-                    {locale === 'th' ? 'ผลงาน & ประสบการณ์' : 'Experience & Projects'}
+                    <LocaleStack text={{ th: 'ผลงาน & ประสบการณ์', en: 'Experience & Projects' }} locale={locale} />
                   </h3>
                 </div>
               </div>
@@ -425,7 +428,7 @@ export function UnifiedTimeline({
                       <span className="portfolio-journey-node shadow-[0_0_15px_var(--pf-accent)]" aria-hidden />
                       {item.type === 'tech' ? (
                         <div className="portfolio-panel portfolio-tech-project-card text-left">
-                          <p className="portfolio-job-card__period">{item.entry.period[locale]}</p>
+                          <LocaleStack text={item.entry.period} locale={locale} as="p" className="portfolio-job-card__period" />
                           <TechTaskItem entry={item.entry} locale={locale} />
                         </div>
                       ) : (

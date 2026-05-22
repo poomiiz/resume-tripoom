@@ -191,7 +191,7 @@ export default function PortfolioView() {
                 </span>
               </span>
               <span className="font-brand text-xs sm:text-sm font-bold tracking-[0.15em] text-black dark:text-white opacity-80 group-hover:opacity-100 transition-opacity">
-                {profile.name[locale]}
+                <LocaleStack text={profile.name} locale={locale} />
               </span>
             </a>
           </div>
@@ -273,9 +273,9 @@ export default function PortfolioView() {
                 </div>
               </div>
 
-              <p className="mb-0 max-w-2xl text-left text-lg font-medium leading-snug tracking-normal text-white/90 md:text-xl">
-                {profile.tagline.creative[locale]}
-              </p>
+              <div className="mb-0 max-w-2xl text-left text-lg font-medium leading-snug tracking-normal text-white/90 md:text-xl">
+                <LocaleStack text={profile.tagline.creative} locale={locale} />
+              </div>
 
               <div className="flex items-center gap-3 my-10">
                 <div className="w-24 h-1.5 bg-[color:var(--pf-accent)] rounded-full shadow-[0_0_15px_var(--pf-accent)] transition-all duration-500" />
@@ -286,9 +286,9 @@ export default function PortfolioView() {
                 </div>
               </div>
 
-              <p className="text-base md:text-lg text-white/80 leading-relaxed max-w-2xl font-normal text-left">
-                {profile.subtitle.creative[locale]}
-              </p>
+              <div className="text-base md:text-lg text-white/80 leading-relaxed max-w-2xl font-normal text-left">
+                <LocaleStack text={profile.subtitle.creative} locale={locale} />
+              </div>
             </div>
 
             <div

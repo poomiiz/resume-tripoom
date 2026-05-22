@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import type { PortfolioLocale } from "../_lib/portfolio.ui";
 import { LocaleUiStack } from "./LocaleUiStack";
+import { LocaleStack } from "./LocaleStack";
 
 export const PORTFOLIO_OPEN_CONTACT_EVENT = "portfolio:open-contact";
 
@@ -96,7 +97,12 @@ export function ContactDock({
                   📞
                 </span>
                 <span className="portfolio-contact-dock__link-body">
-                  <span className="portfolio-contact-dock__link-label">{phoneLabel}</span>
+                  <LocaleStack
+                    text={{ th: 'โทรศัพท์', en: 'Phone' }}
+                    locale={locale}
+                    as="span"
+                    className="portfolio-contact-dock__link-label"
+                  />
                   <span className="portfolio-contact-dock__link-value">{contact.phone}</span>
                 </span>
               </a>
@@ -126,7 +132,12 @@ export function ContactDock({
                   ✉️
                 </span>
                 <span className="portfolio-contact-dock__link-body">
-                  <span className="portfolio-contact-dock__link-label">{emailLabel}</span>
+                  <LocaleStack
+                    text={{ th: 'อีเมล', en: 'Email' }}
+                    locale={locale}
+                    as="span"
+                    className="portfolio-contact-dock__link-label"
+                  />
                   <span className="portfolio-contact-dock__link-value">{contact.email}</span>
                 </span>
               </a>
