@@ -1734,8 +1734,7 @@ body {
 }
 
 [data-locale="th"] .portfolio-phase-chip-title,
-[data-locale="th"] .portfolio-journey-craft-line-under-chip,
-[data-locale="th"] .portfolio-hero-role > span {
+[data-locale="th"] .portfolio-journey-craft-line-under-chip {
   letter-spacing: 0.04em;
 }
 
