@@ -80,7 +80,7 @@ export function ContactDock({
               <span className="portfolio-contact-dock__head-icon" aria-hidden>
                 ✉️
               </span>
-              <LocaleUiStack path="sections.contact" locale={locale} as="p" className="portfolio-contact-dock__head-text" />
+              <LocaleUiStack path="sections.contact" locale={locale} as="p" className="portfolio-contact-dock__head-text text-slate-900 dark:text-white/90" />
               <button
                 type="button"
                 className="portfolio-contact-dock__close"
@@ -101,9 +101,9 @@ export function ContactDock({
                     text={{ th: 'โทรศัพท์', en: 'Phone' }}
                     locale={locale}
                     as="span"
-                    className="portfolio-contact-dock__link-label"
+                    className="portfolio-contact-dock__link-label text-slate-500 dark:text-white/50"
                   />
-                  <span className="portfolio-contact-dock__link-value">{contact.phone}</span>
+                  <span className="portfolio-contact-dock__link-value text-slate-900 dark:text-white/90">{contact.phone}</span>
                 </span>
               </a>
 
@@ -118,8 +118,8 @@ export function ContactDock({
                     LINE
                   </span>
                   <span className="portfolio-contact-dock__link-body">
-                    <span className="portfolio-contact-dock__link-label">{lineLabel}</span>
-                    <span className="portfolio-contact-dock__link-value">{contact.line}</span>
+                    <span className="portfolio-contact-dock__link-label text-slate-500 dark:text-white/50">{lineLabel}</span>
+                    <span className="portfolio-contact-dock__link-value text-slate-900 dark:text-white/90">{contact.line}</span>
                   </span>
                 </a>
               ) : null}
@@ -136,9 +136,9 @@ export function ContactDock({
                     text={{ th: 'อีเมล', en: 'Email' }}
                     locale={locale}
                     as="span"
-                    className="portfolio-contact-dock__link-label"
+                    className="portfolio-contact-dock__link-label text-slate-500 dark:text-white/50"
                   />
-                  <span className="portfolio-contact-dock__link-value">{contact.email}</span>
+                  <span className="portfolio-contact-dock__link-value text-slate-900 dark:text-white/90">{contact.email}</span>
                 </span>
               </a>
             </motion.div>

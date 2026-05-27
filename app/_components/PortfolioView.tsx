@@ -377,9 +377,9 @@ export default function PortfolioView() {
         </section>
 
       </main>
-    </div>
 
-    <ContactDock locale={locale} contact={contact} />
+      <ContactDock locale={locale} contact={contact} />
+    </div>
     </>
   );
 }
