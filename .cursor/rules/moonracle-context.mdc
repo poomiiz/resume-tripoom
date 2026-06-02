@@ -1,0 +1,128 @@
+---
+description: MoonRacle Workspace — Global Context Rules (v3 Ironclad)
+alwaysApply: true
+---
+
+# MoonRacle — Global Agent Rules
+
+## 0. MANDATORY FIRST STEP (ทุก session ทุก Agent)
+
+ก่อนตอบหรือทำงานใดๆ ที่เกี่ยวกับ project ให้ query context_index ก่อนเสมอ:
+
+```sql
+SELECT project_key, display_name, stack, domain, summary,
+       key_routes, services, local_path, repo_url, docs_ref
+FROM platform.context_index
+ORDER BY project_key;
+```
+
+**ถ้าไม่มีข้อมูล หรือ status = pending-audit → ขอ audit ก่อน ห้ามเดาหรือวางแผนต่อ**
+
+---
+
+## 1. PROJECT LOOKUP TABLE
+
+| คำที่คนพิมพ์ | project_key | query เพิ่มเติม |
+|---|---|---|
+| ดูดวง, หมอดู, booking, wallet, moonracle.com, GCP, เซอวิส | `moonracle-web` | `SELECT * FROM mr_dev.pages WHERE project_key = 'moonracle-web'` |
+| เพลง, music, pipeline, suno, stage, hook, AI เพลง | `moonracle-music` | `SELECT * FROM platform.ai_projects` |
+| resume, portfolio, poomiiz, github pages | `moonracle-resume` | `SELECT * FROM mr_dev.pages WHERE project_key = 'moonracle-resume'` |
+| db, database, schema, platform, infrastructure, cursor rules | `moonracle-platform` | `SELECT table_schema, table_name FROM information_schema.tables WHERE table_schema NOT IN ('pg_catalog','information_schema')` |
+
+---
+
+## 2. BEFORE TOUCHING ANY PAGE/UI
+
+```sql
+-- ดูสถานะหน้าก่อนเสมอ
+SELECT p.project_key, p.route, p.title, p.status,
+       p.tech_stack, p.description,
+       f.feature_name, f.feature_type, f.data_source
+FROM mr_dev.pages p
+LEFT JOIN mr_dev.page_features f ON f.page_id = p.id
+WHERE p.project_key = '[project_key]'
+ORDER BY p.route, f.id;
+```
+
+**ถ้า status = pending-audit → ต้อง audit ก่อน ห้าม implement**
+
+---
+
+## 3. AFTER COMPLETING WORK (ทุก session ที่มีการเปลี่ยนแปลง)
+
+```sql
+-- อัปเดต page ที่แก้ไข
+UPDATE mr_dev.pages SET
+  status         = 'active',
+  notes          = '[สิ่งที่เปลี่ยน]',
+  last_audited_at = NOW(),
+  updated_at     = NOW()
+WHERE project_key = '[project_key]' AND route = '[route]';
+
+-- บันทึก dev_log
+INSERT INTO platform.dev_logs (date, project, problem, cause, solution, result, agent)
+VALUES (NOW(), '[project]', '[problem]', '[cause]', '[solution]', '[result]', '[agent_name]');
+
+-- อัปเดต context_index ถ้า stack/summary/services เปลี่ยน
+UPDATE platform.context_index SET
+  summary    = '[อัปเดต]',
+  updated_at = NOW()
+WHERE project_key = '[project_key]';
+```
+
+---
+
+## 4. WHEN ADDING NEW PAGE OR FEATURE
+
+```sql
+-- INSERT หน้าใหม่
+INSERT INTO mr_dev.pages
+  (project_key, route, title, status, description, owner_agent, tech_stack)
+VALUES ('[project_key]', '[route]', '[title]', 'active', '[desc]', '[agent]', ARRAY['...'])
+ON CONFLICT (project_key, route) DO UPDATE SET
+  description = EXCLUDED.description,
+  updated_at  = NOW();
+
+-- INSERT features ของหน้านั้น
+INSERT INTO mr_dev.page_features
+  (page_id, feature_name, feature_type, data_source, data_destination, description)
+SELECT p.id, '[name]', '[type]', '[source]', '[dest]', '[desc]'
+FROM mr_dev.pages p
+WHERE p.project_key = '[project_key]' AND p.route = '[route]';
+```
+
+---
+
+## 5. WORKFLOW STANDARDS v3 (Ironclad — ใช้ทุก Agent)
+
+1. **ห้ามเดา** — ไม่รู้ให้ query DB ก่อน ไม่มีข้อมูลให้ audit ก่อน
+2. **แตกงาน** — task ใหญ่ต้อง INSERT sub-tasks ใน `platform.tasks` ก่อนทำ
+3. **จองงาน** — `UPDATE platform.tasks SET status='in_progress', assigned_agent='[name]'`
+4. **บันทึกทุกขั้น** — INSERT `platform.dev_logs` แยก problem/cause/solution/result
+5. **ปิดงาน** — ตอบ 1 บรรทัด: `เสร็จแล้ว — dev_log #[id]`
+
+
+---
+## STARTUP QUERY (รันทุก session)
+
+docker exec kb-postgres psql -U dev_user -d knowledge_base -c "
+SELECT project_key, display_name, summary, key_routes, services
+FROM platform.context_index ORDER BY project_key;"
+
+## IF PAGE RELATED
+
+docker exec kb-postgres psql -U dev_user -d knowledge_base -c "
+SELECT p.route, p.title, p.status, p.tech_stack,
+       f.feature_name, f.feature_type, f.data_source
+FROM mr_dev.pages p
+LEFT JOIN mr_dev.page_features f ON f.page_id = p.id
+WHERE p.project_key = '[project_key]'
+ORDER BY p.route, f.id;"
+
+## AFTER EVERY SESSION
+
+docker exec kb-postgres psql -U dev_user -d knowledge_base -c "
+UPDATE mr_dev.pages SET
+  status = 'active', notes = '[สิ่งที่เปลี่ยน]',
+  last_audited_at = NOW(), updated_at = NOW()
+WHERE project_key = '[project_key]' AND route = '[route]';"

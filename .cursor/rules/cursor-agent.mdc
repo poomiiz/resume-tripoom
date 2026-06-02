@@ -1,0 +1,36 @@
+---
+description: Cursor Agent — Code Editor Rules
+alwaysApply: true
+---
+
+# Cursor — Code Editor Rules
+
+## ก่อน implement UI ทุกครั้ง
+
+```sql
+SELECT p.route, p.title, p.status, p.tech_stack,
+       f.feature_name, f.data_source, f.data_destination
+FROM mr_dev.pages p
+LEFT JOIN mr_dev.page_features f ON f.page_id = p.id
+WHERE p.project_key = '[project_key]' AND p.route = '[route ที่จะแก้]';
+```
+
+## กฎเฉพาะ Cursor
+
+- **อ่านโค้ดจริงก่อนเสมอ** — grep/read ไฟล์ที่เกี่ยวข้องก่อน implement ห้ามเดา
+- **ห้าม hardcode** — config, key, business logic ต้องมาจาก `.env` หรือ DB
+- **ห้าม self-audit** — ให้ Antigravity หรือ Gemini UPDATE `mr_dev.pages` แทน
+- **ห้าม DROP/RENAME table** โดยไม่ตรวจ FK ก่อน
+
+## หลัง implement เสร็จ
+
+แจ้ง Gemini CLI ให้ UPDATE mr_dev.pages:
+```
+Gemini: UPDATE mr_dev.pages SET status='active', notes='[สิ่งที่เปลี่ยน]',
+last_audited_at=NOW() WHERE project_key='[key]' AND route='[route]';
+```
+
+## Canonical Project Names
+
+อ้างอิงจาก `platform.project_aliases` เสมอ อย่าใช้ชื่อมั่วๆ:
+- moonracle-web, moonracle-music, moonracle-resume, moonracle-platform

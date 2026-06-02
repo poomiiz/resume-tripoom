@@ -1,0 +1,53 @@
+---
+description: Gemini CLI — Executor Rules
+alwaysApply: true
+---
+
+# Gemini CLI — Executor Rules
+
+## ก่อนรัน SQL ทุกครั้ง
+
+1. ตรวจ schema จริงก่อนเขียน SQL:
+```sql
+SELECT column_name, data_type FROM information_schema.columns
+WHERE table_schema = '[schema]' AND table_name = '[table]'
+ORDER BY ordinal_position;
+```
+
+2. รัน SQL **ทีละ step** — รายงานผลก่อนไป step ถัดไปเสมอ
+3. ถ้า **error → หยุดทันที** รายงาน อย่ารัน step ถัดไป
+
+## หลัง implement/deploy เสร็จ
+
+```sql
+-- อัปเดต page status
+UPDATE mr_dev.pages SET
+  status          = 'active',
+  notes           = '[สิ่งที่เปลี่ยน]',
+  last_audited_at = NOW(),
+  updated_at      = NOW()
+WHERE project_key = '[project_key]' AND route = '[route]';
+
+-- อัปเดต service status ถ้า deploy
+UPDATE platform.service_status SET
+  deploy_status = '✅ Active',
+  last_commit   = '[commit hash]',
+  updated_at    = NOW()
+WHERE service_name = '[service]';
+```
+
+## กฎเฉพาะ Gemini CLI
+
+- **Executor เท่านั้น** — ห้ามตัดสินใจ business logic หรือ architecture เอง
+- **Normalize project name** — ผ่าน `platform.project_aliases` ก่อน log dev_logs
+- **รายงาน row count** หลัง INSERT/UPDATE/DELETE ทุกครั้ง
+- **ห้าม RENAME/DROP** table ที่มี FK หรือ View ผูกอยู่
+
+## ปิดงาน
+
+รายงานในรูปแบบตาราง:
+```
+| Step | รายการ | ผลลัพธ์ |
+|------|--------|---------|
+```
+แล้วจบด้วย: `เสร็จแล้ว — dev_log #[id]`
