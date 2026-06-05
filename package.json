@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean": "node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\"",
-    "dev": "next dev -p 3001",
+    "dev": "next dev --turbopack -p 3001",
     "dev:clean": "npm run clean && npm run dev",
     "monitor": "powershell -ExecutionPolicy Bypass -File scripts/perf-monitor.ps1",
     "build": "next build",
