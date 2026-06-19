@@ -56,8 +56,6 @@ export const WORK_TOOL_ICON_SRC: Record<string, WorkToolIconPin> = {
   codex: `${SIMPLE_ICONS}/openai.svg`,
   sora: `${SIMPLE_ICONS}/openai.svg`,
   hermes: "https://hermes-agent.ai/icon.png",
-  openclaw:
-    "https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/pixel-lobster.svg",
   obsidian: {
     light: "https://cdn.simpleicons.org/obsidian/7C3AED",
     dark: "https://cdn.simpleicons.org/obsidian/FFFFFF",
