@@ -1,6 +1,7 @@
-# Project Instructions (Resume)
+# Project Instructions (Resume) — Gemini
 
-## Stable Checkpoint (2026-06-06)
-- **Status**: Verified Stable Baseline
-- **Summary**: The resume generation logic and styling are verified and working as expected.
-- **Mandate**: Preserve the current export formats and UI layout. Any updates to personal data or templates should be done surgically without affecting the core engine.
+> โปรโตคอลทีม/กฎการทำงานกลางอยู่ที่ `MoonRacle/CLAUDE.md` (ทีม, Hard Gates, Memory Loop) — อ่านไฟล์นั้นเป็นหลัก
+
+## Fact เฉพาะ repo (Resume)
+- Static export (Next.js `output: 'export'`) · รัน :4000 · test ด้วย `npm run build && npx serve out`
+- แก้ personal data/template แบบ surgical — อย่ากระทบ core export engine/layout
