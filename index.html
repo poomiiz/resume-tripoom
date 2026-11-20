@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tripoom Singhaart — Motion Portfolio</title>
+<meta name="description" content="Senior Motion Artist · AI Content Director · Creative Technologist. 12+ ปี งาน Motion ให้ Samsung, LINE, Lexus, PTT, SCB และอีกมากมาย">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="nav__logo" href="#top">TS<span>.</span></a>
+  <nav>
+    <a href="#reels" data-th="ผลงาน" data-en="Showreels">ผลงาน</a>
+    <a href="#experience" data-th="ประวัติ" data-en="Experience">ประวัติ</a>
+    <a href="#brands" data-th="แบรนด์" data-en="Brands">แบรนด์</a>
+    <a href="#contact" data-th="ติดต่อ" data-en="Contact">ติดต่อ</a>
+  </nav>
+  <button class="lang" id="lang" aria-label="Switch language">EN</button>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__orb hero__orb--a"></div>
+    <div class="hero__orb hero__orb--b"></div>
+    <div class="hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow reveal">Motion Graphic · AI Content · Creative Tech</p>
+        <h1 class="split" id="heroName">Tripoom<br>Singhaart</h1>
+        <p class="hero__role reveal">Senior Motion Artist · AI Content Director · Technical Artist</p>
+        <p class="hero__sub reveal" data-th="Creative Technologist ที่ไม่แยกงานสร้างสรรค์ออกจากเทคโนโลยี ผลิตงาน Motion ให้แบรนด์ระดับโลกและแคมเปญระดับประเทศมากว่า 12 ปี" data-en="A Creative Technologist who never separates craft from technology. 12+ years producing Motion for global brands and national campaigns.">Creative Technologist ที่ไม่แยกงานสร้างสรรค์ออกจากเทคโนโลยี ผลิตงาน Motion ให้แบรนด์ระดับโลกและแคมเปญระดับประเทศมากว่า 12 ปี</p>
+        <div class="hero__cta reveal">
+          <a class="btn btn--primary" href="#reels" data-th="ดู Showreel" data-en="Watch Showreels">ดู Showreel</a>
+          <a class="btn" href="#contact" data-th="ติดต่อ" data-en="Get in touch">ติดต่อ</a>
+        </div>
+      </div>
+      <figure class="hero__portrait reveal">
+        <img src="assets/portrait.jpg" alt="Tripoom Singhaart" width="640" height="800">
+        <figcaption>Since 2012</figcaption>
+      </figure>
+    </div>
+    <ul class="stats">
+      <li class="reveal"><b data-count="12" data-suffix="+">0</b><span data-th="ปีประสบการณ์" data-en="Years in motion">ปีประสบการณ์</span></li>
+      <li class="reveal"><b data-count="8" data-suffix="">0</b><span data-th="Showreel รายปี" data-en="Yearly showreels">Showreel รายปี</span></li>
+      <li class="reveal"><b data-count="44" data-suffix="+">0</b><span data-th="โลโก้แบรนด์ที่ร่วมงาน" data-en="Brand logos">โลโก้แบรนด์ที่ร่วมงาน</span></li>
+      <li class="reveal"><b data-count="2.5" data-suffix="M+" data-dec="1">0</b><span data-th="ยอดวิว AR Effect" data-en="AR Effect views">ยอดวิว AR Effect</span></li>
+    </ul>
+    <div class="scrollhint" aria-hidden="true"><i></i></div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>After Effects</span><span>Premiere Pro</span><span>Blender</span><span>3D Animation</span><span>VFX</span><span>CGI Ads</span><span>Generative AI</span><span>TikTok AR</span><span>Automation</span>
+      <span>After Effects</span><span>Premiere Pro</span><span>Blender</span><span>3D Animation</span><span>VFX</span><span>CGI Ads</span><span>Generative AI</span><span>TikTok AR</span><span>Automation</span>
+    </div>
+  </div>
+
+  <!-- SHOWREELS BY YEAR -->
+  <section class="section" id="reels">
+    <header class="section__head reveal">
+      <p class="eyebrow" data-th="01 — Showreel รายปี" data-en="01 — Yearly Showreels">01 — Showreel รายปี</p>
+      <h2 data-th="ผลงานแต่ละปี" data-en="Work, year by year">ผลงานแต่ละปี</h2>
+    </header>
+    <div class="years" id="years" role="tablist"></div>
+    <article class="stage reveal" id="stage">
+      <button class="stage__media" id="stageMedia" aria-label="Play showreel">
+        <img id="stageImg" alt="">
+        <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+      </button>
+      <div class="stage__info">
+        <span class="stage__year" id="stageYear"></span>
+        <h3 id="stageCompany"></h3>
+        <p class="stage__role" id="stageRole"></p>
+        <ul id="stageList"></ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <header class="section__head reveal">
+      <p class="eyebrow" data-th="02 — ประวัติการทำงาน" data-en="02 — Experience">02 — ประวัติการทำงาน</p>
+      <h2 data-th="เส้นทางสาย Motion" data-en="The motion path">เส้นทางสาย Motion</h2>
+    </header>
+    <div class="timeline" id="timeline"></div>
+    <div class="arc">
+      <div class="arc__item reveal">
+        <span>2012 — 2024</span>
+        <h3>Senior Motion Artist &amp; Visual Legacy</h3>
+        <p data-th="Motion Graphics และ VFX จริงๆ มากว่า 12 ปี ให้ Samsung, Lexus, PTT, SCB ทั้งโฆษณาทีวีและ Event ระดับประเทศ" data-en="A creative foundation for global giants — TV commercials and national-scale events, bridging traditional artistry with modern production.">Motion Graphics และ VFX จริงๆ มากว่า 12 ปี ให้ Samsung, Lexus, PTT, SCB ทั้งโฆษณาทีวีและ Event ระดับประเทศ</p>
+      </div>
+      <div class="arc__item reveal">
+        <span>2025 — <em data-th="ปัจจุบัน" data-en="Present">ปัจจุบัน</em></span>
+        <h3>AI Systems Architect &amp; Content Director</h3>
+        <p data-th="กำกับ AI Content และพัฒนาระบบ Automation เชื่อมงานภาพระดับพรีเมียมเข้ากับระบบหลังบ้านที่ฉลาด" data-en="Directing AI content and building automation platforms that bridge premium visual storytelling with code-driven pipelines.">กำกับ AI Content และพัฒนาระบบ Automation เชื่อมงานภาพระดับพรีเมียมเข้ากับระบบหลังบ้านที่ฉลาด</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI SHORTS -->
+  <section class="section section--wide" id="nina">
+    <header class="section__head reveal">
+      <p class="eyebrow">03 — AI Storytelling</p>
+      <h2>Nina.digital</h2>
+    </header>
+    <div class="shorts" id="shorts"></div>
+  </section>
+
+  <!-- BRANDS -->
+  <section class="section section--wide" id="brands">
+    <header class="section__head reveal">
+      <p class="eyebrow" data-th="04 — แบรนด์ที่ร่วมงาน" data-en="04 — Brands">04 — แบรนด์ที่ร่วมงาน</p>
+      <h2 data-th="แบรนด์ที่ไว้วางใจ" data-en="Trusted by">แบรนด์ที่ไว้วางใจ</h2>
+    </header>
+    <ul class="brandnames reveal">
+      <li>Samsung</li><li>LINE</li><li>Lexus</li><li>PTT</li><li>SCB</li><li>Krungthai</li><li>Burger King</li><li>Nok Air</li><li>STAEDTLER</li><li>The Pizza Company</li><li>Amway</li><li>Krungsri</li>
+    </ul>
+    <div class="logos" id="logos"></div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact">
+    <p class="eyebrow reveal" data-th="05 — ติดต่อ" data-en="05 — Contact">05 — ติดต่อ</p>
+    <h2 class="contact__big reveal" data-th="มาสร้างงานด้วยกัน" data-en="Let’s make something move">มาสร้างงานด้วยกัน</h2>
+    <div class="contact__links reveal">
+      <a href="mailto:singhaarttripoom@gmail.com">singhaarttripoom@gmail.com</a>
+      <a href="tel:+66624659950">062-465-9950</a>
+      <a href="https://line.me/ti/p/~tripoom-om" target="_blank" rel="noopener">LINE @tripoom-om</a>
+    </div>
+    <p class="edu reveal" data-th="ศิลปบัณฑิต (คอมพิวเตอร์อาร์ต) · คณะดิจิทัลอาร์ต มหาวิทยาลัยรังสิต · 2551–2555" data-en="B.F.A. Computer Art · Faculty of Digital Art, Rangsit University · 2008–2012">ศิลปบัณฑิต (คอมพิวเตอร์อาร์ต) · คณะดิจิทัลอาร์ต มหาวิทยาลัยรังสิต · 2551–2555</p>
+  </section>
+</main>
+
+<footer class="foot">© 2026 Tripoom Singhaart</footer>
+
+<div class="modal" id="modal" hidden>
+  <button class="modal__close" id="modalClose" aria-label="Close">✕</button>
+  <div class="modal__box" id="modalBox"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
